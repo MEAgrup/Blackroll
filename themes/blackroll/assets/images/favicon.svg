@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Blackroll">
+	<rect width="64" height="64" fill="#0A0A0A"/>
+	<!-- Rolled blind + pull cord (placeholder icon mark — swap for final brand asset). -->
+	<rect x="16" y="12" width="32" height="10" rx="2" fill="#FFFFFF"/>
+	<rect x="20" y="22" width="24" height="26" fill="#FFFFFF" opacity="0.85"/>
+	<line x1="32" y1="48" x2="32" y2="56" stroke="#FFFFFF" stroke-width="2"/>
+	<circle cx="32" cy="57" r="2.5" fill="#FFFFFF"/>
+</svg>

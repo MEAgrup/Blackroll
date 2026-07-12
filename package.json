@@ -1,0 +1,25 @@
+{
+	"name": "blackroll-website",
+	"version": "0.1.0",
+	"private": true,
+	"description": "Blackroll — custom WordPress block theme + blackroll-core companion plugin. Affordable premium roller blinds, bilingual ID/EN.",
+	"author": "MEA Agency",
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"build": "node scripts/build.mjs",
+		"build:analyze": "node scripts/build.mjs --analyze",
+		"watch": "node scripts/build.mjs --watch",
+		"start": "wp-env start",
+		"stop": "wp-env stop",
+		"clean": "wp-env clean all",
+		"seed": "wp-env run cli wp blackroll seed",
+		"cli": "wp-env run cli wp",
+		"qa": "lhci autorun --config=./lighthouserc.json",
+		"lint:php": "wp-env run cli --env-cwd=wp-content/themes/blackroll php -l functions.php"
+	},
+	"devDependencies": {
+		"@lhci/cli": "^0.14.0",
+		"@wordpress/env": "^10.10.0",
+		"esbuild": "^0.24.0"
+	}
+}

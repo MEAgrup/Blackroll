@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build output
+themes/blackroll/assets/js/dist/
+themes/blackroll/assets/css/dist/
+*.map
+
+# WordPress / wp-env
+wp-cli.local.yml
+.wp-env.override.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+*.swp
+
+# Lighthouse / QA artifacts
+.lighthouseci/
+lhci_reports/
+
+# Secrets — never commit
+.env
+.env.*
+*.local.php

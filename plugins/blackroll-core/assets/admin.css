@@ -1,0 +1,6 @@
+.blackroll-field { margin: 0 0 1rem; }
+.blackroll-field label { display: inline-block; margin-bottom: 0.25rem; }
+.blackroll-field--boolean label { margin-right: 0.5rem; }
+.blackroll-media-preview img { border: 1px solid #dcdcde; vertical-align: middle; margin-left: 0.5rem; }
+#blackroll-shade-fields .description,
+#blackroll-project-fields .description { color: #646970; }
