@@ -25,8 +25,8 @@ Deploy is intentionally the **last** step. This is the cutover + ops reference.
 ## 4. Sebari lead form
 - Confirm the embed IDs in `blackroll-core/inc/sebari.php` (`971` / `5260` / `139954`).
 - In the **Sebari dashboard**, set the form's redirect URLs:
-  - Success → `https://blackroll.co.id/kontak/terima-kasih/`
-  - Failure → `https://blackroll.co.id/kontak/gagal/`
+  - Success → `https://blackrollblinds.com/kontak/terima-kasih/`
+  - Failure → `https://blackrollblinds.com/kontak/gagal/`
 - If Sebari cannot redirect: set `define('BLACKROLL_SEBARI_SUBMIT_MODE','fetch');` in `wp-config.php` (Mode F: inline success, needs the CSP `connect-src` which is added automatically for fetch mode).
 - Test an end-to-end submit into the WhatsApp automation.
 
@@ -45,7 +45,7 @@ Deploy is intentionally the **last** step. This is the cutover + ops reference.
 
 ## 7. Cutover (staging → production)
 1. Final content check on staging.
-2. Search-replace staging URL → `https://blackroll.co.id` (WP-CLI `wp search-replace`).
+2. Search-replace staging URL → `https://blackrollblinds.com` (WP-CLI `wp search-replace`).
 3. Purge LiteSpeed cache.
 4. **Flip `robots.txt`**: ensure production env type so it allows crawling (classic launch-killer if forgotten).
 5. Resubmit Rank Math sitemap to GSC.

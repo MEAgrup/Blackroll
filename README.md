@@ -102,7 +102,7 @@ Standard **Posts → Add New** with a category (Panduan / Inspirasi / Produk). C
 | Kebijakan Privasi copy | placeholder | `/kebijakan-privasi/` page | MEA-provided wording |
 | Logo + favicon | placeholder reconstruction | `assets/images/favicon.svg`, `logo-mark.svg` | Official brand SVG/PNG |
 | EN translations | placeholder | Polylang | Progressive per D6 |
-| Domain | default | `BLACKROLL_SITE_URL` (`https://blackroll.co.id`) | Final production domain |
+| Domain | default | `BLACKROLL_SITE_URL` (`https://blackrollblinds.com`) | Final production domain |
 
 > **Real assets bundled:** product photos for the ML-series shades + D-series, plus lifestyle (ruang tamu/dapur/kantor/office) and tech (5-lapis blackout, tahan air, panduan pasang) images live in `plugins/blackroll-core/seed-assets/` as optimized WebP. `wp blackroll seed` sideloads them into the Media Library and attaches them to shades, projects and articles.
 >

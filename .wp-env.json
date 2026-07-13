@@ -2,7 +2,9 @@
 	"$schema": "https://schemas.wp.org/trunk/wp-env.json",
 	"core": "WordPress/WordPress",
 	"phpVersion": "8.1",
-	"themes": [ "./themes/blackroll" ],
+	"themes": [
+		"./themes/blackroll"
+	],
 	"plugins": [
 		"./plugins/blackroll-core"
 	],
@@ -12,10 +14,7 @@
 		"WP_DEBUG_DISPLAY": false,
 		"SCRIPT_DEBUG": true,
 		"WP_ENVIRONMENT_TYPE": "local",
-		"BLACKROLL_SITE_URL": "https://blackroll.co.id"
-	},
-	"mappings": {
-		"wp-content/mu-plugins": "./scripts/mu-plugins"
+		"BLACKROLL_SITE_URL": "https://blackrollblinds.com"
 	},
 	"lifecycleScripts": {
 		"afterStart": "wp-env run cli wp theme activate blackroll && wp-env run cli wp plugin activate blackroll-core && wp-env run cli wp rewrite structure '/%postname%/' && wp-env run cli wp option update timezone_string 'Asia/Jakarta' && wp-env run cli wp option update WPLANG ''"

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Blackroll Core
- * Plugin URI:        https://blackroll.co.id
+ * Plugin URI:        https://blackrollblinds.com
  * Description:        Companion plugin for the Blackroll theme. Registers the shade/project content model, config flags (Sebari submit mode, analytics, primary WA), localized rewrites, schema, security headers and the Sebari lead-form helpers. Lives outside the theme so content and config survive theme swaps.
  * Version:           0.1.0
  * Requires at least: 6.5
@@ -29,7 +29,7 @@ define( 'BLACKROLL_CORE_URL', plugin_dir_url( __FILE__ ) );
  * -----------------------------------------------------------------------------
  */
 if ( ! defined( 'BLACKROLL_SITE_URL' ) ) {
-	define( 'BLACKROLL_SITE_URL', 'https://blackroll.co.id' );
+	define( 'BLACKROLL_SITE_URL', 'https://blackrollblinds.com' );
 }
 if ( ! defined( 'BLACKROLL_SEBARI_SUBMIT_MODE' ) ) {
 	// D1 = redirect (Mode R). Contingency: 'fetch' (Mode F) if Sebari has no redirect_url.
@@ -59,6 +59,7 @@ require_once BLACKROLL_CORE_DIR . 'inc/sebari.php';
 require_once BLACKROLL_CORE_DIR . 'inc/selector.php';
 require_once BLACKROLL_CORE_DIR . 'inc/portfolio.php';
 require_once BLACKROLL_CORE_DIR . 'inc/settings-page.php';
+require_once BLACKROLL_CORE_DIR . 'inc/cli-seed.php';
 
 /**
  * Flush rewrite rules on activation/deactivation so CPT archives and localized
