@@ -117,3 +117,36 @@ add_filter(
 		return $endpoints;
 	}
 );
+
+/**
+ * Thin-content SEO hygiene (PATCH-15): redirect attachment pages to their
+ * parent, and disable author archives. Rank Math can also do this; these are
+ * safe fallbacks and idempotent.
+ */
+add_action(
+	'template_redirect',
+	function () {
+		if ( is_attachment() ) {
+			$parent = wp_get_post_parent_id( get_queried_object_id() );
+			wp_safe_redirect( $parent ? get_permalink( $parent ) : home_url( '/' ), 301 );
+			exit;
+		}
+		if ( is_author() ) {
+			wp_safe_redirect( home_url( '/' ), 301 );
+			exit;
+		}
+	}
+);
+
+/**
+ * Kill the ?author=N enumeration redirect on the front end.
+ */
+add_action(
+	'init',
+	function () {
+		if ( ! is_admin() && isset( $_GET['author'] ) && ! is_user_logged_in() ) {
+			wp_safe_redirect( home_url( '/' ), 301 );
+			exit;
+		}
+	}
+);

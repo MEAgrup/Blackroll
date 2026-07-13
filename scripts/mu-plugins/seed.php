@@ -120,11 +120,17 @@ class Blackroll_Seed_Command {
 		$this->ensure_page( 'Pengiriman Gagal', 'gagal', 'template-thankyou', '<!-- wp:pattern {"slug":"blackroll/contact-failed"} /-->' );
 		$this->ensure_page( 'Kebijakan Privasi', 'kebijakan-privasi' );
 
+		// Blog posts page at /artikel/ (Module 1).
+		$blog = $this->ensure_page( 'Artikel', 'artikel' );
+
 		// Set the homepage to a static front page if one is named "Beranda".
 		$home = $this->ensure_page( 'Beranda', 'beranda' );
 		if ( $home ) {
 			update_option( 'show_on_front', 'page' );
 			update_option( 'page_on_front', $home );
+		}
+		if ( $blog ) {
+			update_option( 'page_for_posts', $blog );
 		}
 	}
 

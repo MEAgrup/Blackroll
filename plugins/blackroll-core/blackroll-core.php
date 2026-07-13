@@ -52,6 +52,8 @@ require_once BLACKROLL_CORE_DIR . 'inc/fields.php';
 require_once BLACKROLL_CORE_DIR . 'inc/rewrites.php';
 require_once BLACKROLL_CORE_DIR . 'inc/query.php';
 require_once BLACKROLL_CORE_DIR . 'inc/schema.php';
+require_once BLACKROLL_CORE_DIR . 'inc/i18n.php';
+require_once BLACKROLL_CORE_DIR . 'inc/seo.php';
 require_once BLACKROLL_CORE_DIR . 'inc/security.php';
 require_once BLACKROLL_CORE_DIR . 'inc/sebari.php';
 require_once BLACKROLL_CORE_DIR . 'inc/selector.php';

@@ -4,7 +4,20 @@
 	<div class="wp-block-group alignwide">
 		<!-- wp:site-title {"level":0,"style":{"typography":{"fontSize":"1.5rem","letterSpacing":"0.04em"}}} /-->
 
-		<!-- wp:navigation {"textColor":"white","overlayBackgroundColor":"black","overlayTextColor":"white","layout":{"type":"flex","setCascadingProperties":true,"justifyContent":"right","flexWrap":"wrap"}} /-->
+		<!-- wp:navigation {"textColor":"white","overlayBackgroundColor":"black","overlayTextColor":"white","layout":{"type":"flex","setCascadingProperties":true,"justifyContent":"right","flexWrap":"wrap"}} -->
+			<!-- wp:navigation-link {"label":"Beranda","url":"/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-link {"label":"Tentang Kami","url":"/tentang-kami/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-submenu {"label":"Produk","url":"/produk/","kind":"custom","isTopLevelItem":true} -->
+				<!-- wp:navigation-link {"label":"Blinds Manual","url":"/produk/blinds-manual/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"Blinds Motorized","url":"/produk/blinds-motorized/","kind":"custom"} /-->
+			<!-- /wp:navigation-submenu -->
+			<!-- wp:navigation-link {"label":"Material & Warna","url":"/material-warna/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-link {"label":"Portofolio","url":"/portofolio/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-link {"label":"Artikel","url":"/artikel/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-link {"label":"Kontak","url":"/kontak/","kind":"custom","isTopLevelLink":true} /-->
+		<!-- /wp:navigation -->
+
+		<!-- wp:shortcode -->[blackroll_language_switcher]<!-- /wp:shortcode -->
 	</div>
 	<!-- /wp:group -->
 </header>

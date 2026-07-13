@@ -125,15 +125,16 @@ SEO layer (Rank Math config, hreflang, schema), security enforce flip (CSP repor
 ## Build progress
 
 - [x] **Step 1** — Theme + plugin scaffold, design system, fonts, base templates, data model, config, security headers, dev/QA tooling
-- [ ] Step 2 — Global components polish (nav, language switcher, footer)
-- [ ] Step 3 — IA/routing + Polylang + localized rewrites verification
-- [ ] Step 4 — Design system + motion loaders
-- [ ] Step 5 — Homepage
+- [x] **Step 2** — Global components: header nav (real sitemap + Produk submenu), language switcher, footer
+- [x] **Step 3** — IA/routing: pages nested under /produk/, blog posts page /artikel/, localized /en/portfolio/ rewrite
+- [x] **Step 4** — Motion loaders (lazy Lottie, reduced-motion, code-split 3D stub)
+- [x] **Step 5** — Homepage (hero LCP + trust + product preview + real room showcase + material teaser + featured portfolio)
 - [x] **Step 6** — Product template (shared) + Manual & Motorized patterns; `/produk/blinds-manual/` + `/produk/blinds-motorized/`
 - [x] **Step 7** — Material & Color selector ([blackroll_selector], real shades, 4 catalogue materials, series+material filter, preview fallback chain)
 - [x] **Step 8** — Portfolio ([blackroll_portfolio], project CPT archive `/portofolio/`, filter + Load More + a11y lightbox)
-- [ ] Step 9 — Blog
+- [x] **Step 9** — Blog: posts page `/artikel/` (home.html), categories, 3 seed article stubs with real featured images, comments off
 - [x] **Step 10** — Contact — real Sebari embed + fallback + static map; success `/kontak/terima-kasih/` + failure `/kontak/gagal/` pages (noindex) for Sebari redirect config
-- [ ] Step 11 — SEO layer
-- [ ] Step 12 — Security layer
-- [ ] Step 13 — A11y + QA pass
+- [x] **Step 11** — SEO layer: OG/Twitter/canonical fallback (defers to Rank Math), robots.txt env-aware, default OG image, hreflang fallback
+- [x] **Step 12** — Security: CSP + headers, XML-RPC off, DISALLOW_FILE_EDIT, attachment/author hygiene, uploads PHP-exec block (deploy/)
+- [x] **Step 13** — A11y + QA: checklist (deploy/QA-CHECKLIST.md), Lighthouse CI config, analyzer gate
+- [ ] Deploy — see `deploy/DEPLOY.md` (last step, on Hostinger staging→production)

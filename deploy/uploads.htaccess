@@ -1,0 +1,13 @@
+# Blackroll — block PHP execution inside wp-content/uploads/ (Module 11 / PATCH-15).
+# Copy this file to: wp-content/uploads/.htaccess on the server.
+# (LiteSpeed on Hostinger honours .htaccess.)
+
+<FilesMatch "\.(?i:php|phtml|php3|php4|php5|php7|phps|pht)$">
+    Require all denied
+</FilesMatch>
+
+# Older Apache 2.2 fallback:
+<IfModule !mod_authz_core.c>
+    Order Deny,Allow
+    Deny from all
+</IfModule>
