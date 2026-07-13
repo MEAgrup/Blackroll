@@ -82,10 +82,13 @@ class Blackroll_Seed_Command {
 		return ! empty( $found );
 	}
 
-	private function ensure_page( $title, $slug, $template = '' ) {
+	private function ensure_page( $title, $slug, $template = '', $content = '' ) {
 		$existing = get_page_by_path( $slug );
 		if ( $existing ) {
 			return $existing->ID;
+		}
+		if ( '' === $content ) {
+			$content = '<!-- wp:paragraph --><p>' . esc_html( $title ) . ' (konten contoh).</p><!-- /wp:paragraph -->';
 		}
 		$id = wp_insert_post(
 			array(
@@ -93,7 +96,7 @@ class Blackroll_Seed_Command {
 				'post_name'   => $slug,
 				'post_status' => 'publish',
 				'post_type'   => 'page',
-				'post_content' => '<!-- wp:paragraph --><p>' . esc_html( $title ) . ' (konten contoh).</p><!-- /wp:paragraph -->',
+				'post_content' => $content,
 			)
 		);
 		if ( $template && ! is_wp_error( $id ) ) {
@@ -107,9 +110,9 @@ class Blackroll_Seed_Command {
 		$this->ensure_page( 'Tentang Kami', 'tentang-kami' );
 		$this->ensure_page( 'Blinds Manual', 'blinds-manual', 'template-product' );
 		$this->ensure_page( 'Blinds Motorized', 'blinds-motorized', 'template-product' );
-		$this->ensure_page( 'Material & Warna', 'material-warna' );
+		$this->ensure_page( 'Material & Warna', 'material-warna', '', '<!-- wp:pattern {"slug":"blackroll/page-material-color"} /-->' );
 		$this->ensure_page( 'Portofolio', 'portofolio' );
-		$this->ensure_page( 'Kontak', 'kontak' );
+		$this->ensure_page( 'Kontak', 'kontak', '', '<!-- wp:pattern {"slug":"blackroll/page-contact"} /-->' );
 		$this->ensure_page( 'Terima Kasih', 'terima-kasih', 'template-thankyou' );
 		$this->ensure_page( 'Kebijakan Privasi', 'kebijakan-privasi' );
 

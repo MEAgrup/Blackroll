@@ -54,6 +54,7 @@ require_once BLACKROLL_CORE_DIR . 'inc/query.php';
 require_once BLACKROLL_CORE_DIR . 'inc/schema.php';
 require_once BLACKROLL_CORE_DIR . 'inc/security.php';
 require_once BLACKROLL_CORE_DIR . 'inc/sebari.php';
+require_once BLACKROLL_CORE_DIR . 'inc/selector.php';
 require_once BLACKROLL_CORE_DIR . 'inc/settings-page.php';
 
 /**

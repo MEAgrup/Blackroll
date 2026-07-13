@@ -130,10 +130,10 @@ SEO layer (Rank Math config, hreflang, schema), security enforce flip (CSP repor
 - [ ] Step 4 — Design system + motion loaders
 - [ ] Step 5 — Homepage
 - [ ] Step 6 — Product template (Manual + Motorized)
-- [ ] Step 7 — Material & Color selector
+- [x] **Step 7** — Material & Color selector ([blackroll_selector], real shades, series+material filter, preview fallback chain)
 - [ ] Step 8 — Portfolio
 - [ ] Step 9 — Blog
-- [ ] Step 10 — Contact (Sebari, thank-you, static map)
+- [~] Step 10 — Contact — Sebari form (real embed) + fallback + static map wired; thank-you page done; static-map WebP pending
 - [ ] Step 11 — SEO layer
 - [ ] Step 12 — Security layer
 - [ ] Step 13 — A11y + QA pass

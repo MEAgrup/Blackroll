@@ -110,9 +110,45 @@ video {
 
 /* ---------- Material & Color selector (Module 6) ---------- */
 
+.blackroll-selector {
+	display: grid;
+	gap: var(--wp--preset--spacing--40, 2rem);
+	grid-template-columns: 1fr;
+	align-items: start;
+}
+@media (min-width: 782px) {
+	.blackroll-selector {
+		grid-template-columns: 1.1fr 0.9fr;
+	}
+	.blackroll-selector__cta {
+		grid-column: 1 / -1;
+	}
+}
 .blackroll-selector__controls {
 	display: grid;
 	gap: var(--wp--preset--spacing--30, 1rem);
+}
+.blackroll-option-block__label {
+	font-family: var(--wp--preset--font-family--heading);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-size: var(--wp--preset--font-size--small);
+	margin: 0 0 0.5rem;
+}
+.blackroll-swatches {
+	gap: 0.5rem;
+}
+.blackroll-swatch[hidden],
+.blackroll-option[hidden] {
+	display: none;
+}
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	white-space: nowrap;
 }
 .blackroll-option-group {
 	display: flex;
