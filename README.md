@@ -93,16 +93,20 @@ Standard **Posts → Add New** with a category (Panduan / Inspirasi / Produk). C
 
 ## Placeholders to swap (open dependencies)
 
-| Placeholder | Where | Replace with |
-|---|---|---|
-| `SEBARI_EMBED` (form_id, group_contact_id, user_id, redirect param) | `plugins/blackroll-core/inc/sebari.php` → `blackroll_sebari_config()` | Real Blackroll Sebari values |
-| SKU/shade data | Shades CPT (via seed or admin) | Client SKU sheet |
-| Product/portfolio photos | Media Library / CPT featured images | Real WebP/AVIF assets |
-| Seed article bodies | Posts (drafts) | MEA content team copy |
-| Kebijakan Privasi copy | `/kebijakan-privasi/` page | MEA-provided wording |
-| Logo + favicon | `assets/images/favicon.svg`, header site-title | Final brand SVG/PNG |
-| EN translations | Polylang | Progressive per D6 |
-| Domain | `BLACKROLL_SITE_URL` (defaults `https://blackroll.co.id`) | Final production domain |
+| Placeholder | Status | Where | Replace with |
+|---|---|---|---|
+| Sebari embed (form_id 971, group 5260, user 139954, +email) | ✅ **wired (real)** | `inc/sebari.php` → `blackroll_sebari_config()` | — (confirm redirect_url support, Open Dep #7) |
+| SKU/shade data | ✅ **real list seeded** (24 SKUs, 4 materials) | `scripts/mu-plugins/seed.php` | — |
+| Product/portfolio photos | ✅ **real photos** (WebP, `seed-assets/`) | `plugins/blackroll-core/seed-assets/` | more via Drive folder as needed |
+| Seed article bodies | placeholder (drafts + real featured images) | Posts | MEA content team copy |
+| Kebijakan Privasi copy | placeholder | `/kebijakan-privasi/` page | MEA-provided wording |
+| Logo + favicon | placeholder reconstruction | `assets/images/favicon.svg`, `logo-mark.svg` | Official brand SVG/PNG |
+| EN translations | placeholder | Polylang | Progressive per D6 |
+| Domain | default | `BLACKROLL_SITE_URL` (`https://blackroll.co.id`) | Final production domain |
+
+> **Real assets bundled:** product photos for the ML-series shades + D-series, plus lifestyle (ruang tamu/dapur/kantor/office) and tech (5-lapis blackout, tahan air, panduan pasang) images live in `plugins/blackroll-core/seed-assets/` as optimized WebP. `wp blackroll seed` sideloads them into the Media Library and attaches them to shades, projects and articles.
+>
+> **Catalogue note (scope flag):** the client SKU sheet lists **four** materials — Blackout, Solar Screen, **Dimout, Zebra Blinds**. Module 6's selector is locked to Blackout + Solar Screen only. All four are stored on each shade via the additive `material_type` meta so no data is lost; expanding the selector to 4 materials is a scope decision.
 
 ---
 

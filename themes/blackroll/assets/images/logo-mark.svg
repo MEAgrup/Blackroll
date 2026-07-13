@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Blackroll icon" fill="#FFFFFF">
+	<!-- Transparent-background icon mark for use on dark headers. Placeholder
+	     reconstruction of the brand mark — swap for the official vector when supplied. -->
+	<rect x="15" y="14" width="30" height="6" rx="3"/>
+	<circle cx="45" cy="17" r="4"/>
+	<path d="M17 20 H43 V44 L17 38 Z"/>
+	<line x1="47" y1="20" x2="47" y2="42" stroke="#FFFFFF" stroke-width="1.6"/>
+	<circle cx="47" cy="45" r="3"/>
+</svg>

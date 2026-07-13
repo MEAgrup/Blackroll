@@ -24,6 +24,10 @@ function blackroll_shade_meta_schema() {
 		'preview_solar'    => array( 'type' => 'integer', 'label' => __( 'Preview — Solar Screen (ID)', 'blackroll-core' ) ),
 		'material_blackout' => array( 'type' => 'boolean', 'label' => __( 'Available in Blackout', 'blackroll-core' ) ),
 		'material_solar'    => array( 'type' => 'boolean', 'label' => __( 'Available in Solar Screen', 'blackroll-core' ) ),
+		// Real catalogue also lists Dimout + Zebra. Stored verbatim so no data is
+		// lost; the Module 6 selector still exposes only Blackout/Solar unless
+		// scope is expanded. Values: blackout|solar_screen|dimout|zebra.
+		'material_type'     => array( 'type' => 'string', 'label' => __( 'Material Type (catalogue)', 'blackroll-core' ) ),
 	);
 }
 

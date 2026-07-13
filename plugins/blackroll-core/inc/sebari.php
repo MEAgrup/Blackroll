@@ -20,7 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Placeholder Sebari config. Replace verbatim with the Blackroll values.
+ * Real Blackroll Sebari config (delivered by client 2026-07-13).
+ * Endpoint /add-participant/971, routing group 5260 / user 139954, fields
+ * name + phone_number + email. Override via the filter if Sebari reissues it.
  *
  * @return array
  */
@@ -28,11 +30,15 @@ function blackroll_sebari_config() {
 	return apply_filters(
 		'blackroll_sebari_config',
 		array(
-			// PLACEHOLDER — confirm with Sebari team (Open Dependency #1).
-			'form_id'          => 'FORM_ID', // e.g. 952
-			'group_contact_id' => 'GROUP_CONTACT_ID',
-			'user_id'          => 'USER_ID',
-			'redirect_param'   => 'redirect_url', // ⚠️ confirm exact param name (Open Dep #7).
+			'form_id'          => '971',
+			'group_contact_id' => '5260',
+			'user_id'          => '139954',
+			'title'            => __( 'Konsultasi gratis dengan team Blackroll', 'blackroll-core' ),
+			// ⚠️ Open Dependency #7: the delivered embed is a plain POST with NO
+			// redirect param. Mode R injects this hidden field as its best effort;
+			// confirm Sebari honours it before go-live, else flip to Mode F
+			// (BLACKROLL_SEBARI_SUBMIT_MODE = fetch).
+			'redirect_param'   => 'redirect_url',
 		)
 	);
 }
@@ -62,7 +68,9 @@ add_shortcode(
 
 		ob_start();
 		?>
-		<!-- SEBARI_EMBED: replace endpoint + routing IDs with the Blackroll form code -->
+		<?php if ( ! empty( $cfg['title'] ) ) : ?>
+			<h2 class="blackroll-sebari-form__title"><?php echo esc_html( $cfg['title'] ); ?></h2>
+		<?php endif; ?>
 		<form class="blackroll-sebari-form" method="POST" action="<?php echo esc_url( $action ); ?>"
 			data-submit-mode="<?php echo esc_attr( $mode ); ?>"
 			data-fallback-wa="<?php echo esc_attr( blackroll_wa_link() ); ?>">
@@ -75,11 +83,15 @@ add_shortcode(
 
 			<p class="blackroll-field">
 				<label for="blackroll-name"><?php esc_html_e( 'Nama', 'blackroll-core' ); ?> *</label>
-				<input id="blackroll-name" name="name" type="text" required autocomplete="name">
+				<input id="blackroll-name" name="name" type="text" placeholder="<?php esc_attr_e( 'Masukkan Nama', 'blackroll-core' ); ?>" required autocomplete="name">
 			</p>
 			<p class="blackroll-field">
 				<label for="blackroll-phone"><?php esc_html_e( 'Nomor WhatsApp', 'blackroll-core' ); ?> *</label>
-				<input id="blackroll-phone" name="phone_number" type="tel" pattern="[0-9]{10,16}" required autocomplete="tel" inputmode="numeric">
+				<input id="blackroll-phone" name="phone_number" type="tel" pattern="[0-9]{10,16}" placeholder="<?php esc_attr_e( 'Masukkan Nomor Whatsapp', 'blackroll-core' ); ?>" required autocomplete="tel" inputmode="numeric">
+			</p>
+			<p class="blackroll-field">
+				<label for="blackroll-email"><?php esc_html_e( 'Email', 'blackroll-core' ); ?> *</label>
+				<input id="blackroll-email" name="email" type="email" placeholder="<?php esc_attr_e( 'Masukkan Email', 'blackroll-core' ); ?>" required autocomplete="email">
 			</p>
 
 			<?php // Honeypot — visually hidden, client-enforced (PATCH-08). ?>
