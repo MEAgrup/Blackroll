@@ -243,6 +243,10 @@ video {
 .blackroll-grid__item[hidden] {
 	display: none;
 }
+.blackroll-loadmore {
+	text-align: center;
+	margin-top: var(--wp--preset--spacing--40, 1.5rem);
+}
 
 /* ---------- Lightbox (Module 7 — self-hosted, focus-trapped) ---------- */
 

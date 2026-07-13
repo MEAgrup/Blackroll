@@ -82,8 +82,9 @@ class Blackroll_Seed_Command {
 		return ! empty( $found );
 	}
 
-	private function ensure_page( $title, $slug, $template = '', $content = '' ) {
-		$existing = get_page_by_path( $slug );
+	private function ensure_page( $title, $slug, $template = '', $content = '', $parent = 0 ) {
+		$path = $parent ? ( get_post_field( 'post_name', $parent ) . '/' . $slug ) : $slug;
+		$existing = get_page_by_path( $path );
 		if ( $existing ) {
 			return $existing->ID;
 		}
@@ -96,6 +97,7 @@ class Blackroll_Seed_Command {
 				'post_name'   => $slug,
 				'post_status' => 'publish',
 				'post_type'   => 'page',
+				'post_parent' => $parent,
 				'post_content' => $content,
 			)
 		);
@@ -108,10 +110,11 @@ class Blackroll_Seed_Command {
 
 	private function pages() {
 		$this->ensure_page( 'Tentang Kami', 'tentang-kami' );
-		$this->ensure_page( 'Blinds Manual', 'blinds-manual', 'template-product' );
-		$this->ensure_page( 'Blinds Motorized', 'blinds-motorized', 'template-product' );
+		$produk = $this->ensure_page( 'Produk', 'produk', '', '<!-- wp:pattern {"slug":"blackroll/home-product-preview"} /-->' );
+		$this->ensure_page( 'Blinds Manual', 'blinds-manual', 'template-product', '<!-- wp:pattern {"slug":"blackroll/product-manual"} /-->', $produk );
+		$this->ensure_page( 'Blinds Motorized', 'blinds-motorized', 'template-product', '<!-- wp:pattern {"slug":"blackroll/product-motorized"} /-->', $produk );
 		$this->ensure_page( 'Material & Warna', 'material-warna', '', '<!-- wp:pattern {"slug":"blackroll/page-material-color"} /-->' );
-		$this->ensure_page( 'Portofolio', 'portofolio' );
+		// Portfolio is the project CPT archive at /portofolio/ (archive-project.html) — no static page.
 		$this->ensure_page( 'Kontak', 'kontak', '', '<!-- wp:pattern {"slug":"blackroll/page-contact"} /-->' );
 		$this->ensure_page( 'Terima Kasih', 'terima-kasih', 'template-thankyou', '<!-- wp:pattern {"slug":"blackroll/contact-thankyou"} /-->' );
 		$this->ensure_page( 'Pengiriman Gagal', 'gagal', 'template-thankyou', '<!-- wp:pattern {"slug":"blackroll/contact-failed"} /-->' );

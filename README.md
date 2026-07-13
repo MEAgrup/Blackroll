@@ -129,11 +129,11 @@ SEO layer (Rank Math config, hreflang, schema), security enforce flip (CSP repor
 - [ ] Step 3 — IA/routing + Polylang + localized rewrites verification
 - [ ] Step 4 — Design system + motion loaders
 - [ ] Step 5 — Homepage
-- [ ] Step 6 — Product template (Manual + Motorized)
-- [x] **Step 7** — Material & Color selector ([blackroll_selector], real shades, series+material filter, preview fallback chain)
-- [ ] Step 8 — Portfolio
+- [x] **Step 6** — Product template (shared) + Manual & Motorized patterns; `/produk/blinds-manual/` + `/produk/blinds-motorized/`
+- [x] **Step 7** — Material & Color selector ([blackroll_selector], real shades, 4 catalogue materials, series+material filter, preview fallback chain)
+- [x] **Step 8** — Portfolio ([blackroll_portfolio], project CPT archive `/portofolio/`, filter + Load More + a11y lightbox)
 - [ ] Step 9 — Blog
-- [~] Step 10 — Contact — Sebari form (real embed) + fallback + static map wired; thank-you page done; static-map WebP pending
+- [x] **Step 10** — Contact — real Sebari embed + fallback + static map; success `/kontak/terima-kasih/` + failure `/kontak/gagal/` pages (noindex) for Sebari redirect config
 - [ ] Step 11 — SEO layer
 - [ ] Step 12 — Security layer
 - [ ] Step 13 — A11y + QA pass
