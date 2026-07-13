@@ -100,6 +100,21 @@ function blackroll_sebari_submit_mode() {
 }
 
 /**
+ * Mark the post-submit pages noindex,follow (PATCH-04 / PATCH-09). Runs early
+ * so it also works when Rank Math is absent; Rank Math will additionally honor
+ * its own robots meta on these pages.
+ */
+add_action(
+	'wp_head',
+	function () {
+		if ( blackroll_is_page_role( 'thankyou' ) || blackroll_is_page_role( 'failed' ) ) {
+			echo '<meta name="robots" content="noindex,follow">' . "\n";
+		}
+	},
+	0
+);
+
+/**
  * Resolve a page "role" so the theme can load per-page scripts and mark
  * noindex pages without hardcoding IDs. Roles map to known slugs (ID + EN).
  *
@@ -115,6 +130,7 @@ function blackroll_is_page_role( $role ) {
 		'portfolio'      => array( 'portofolio', 'portfolio' ),
 		'contact'        => array( 'kontak', 'contact' ),
 		'thankyou'       => array( 'terima-kasih', 'thank-you' ),
+		'failed'         => array( 'gagal', 'failed' ),
 		'privacy'        => array( 'kebijakan-privasi', 'privacy-policy' ),
 	);
 	if ( empty( $slugs[ $role ] ) ) {

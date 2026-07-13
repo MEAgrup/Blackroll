@@ -77,9 +77,16 @@ add_shortcode(
 
 			<input type="hidden" name="group_contact_id" value="<?php echo esc_attr( $cfg['group_contact_id'] ); ?>">
 			<input type="hidden" name="user_id" value="<?php echo esc_attr( $cfg['user_id'] ); ?>">
-			<?php if ( 'redirect' === $mode ) : ?>
-				<input type="hidden" name="<?php echo esc_attr( $cfg['redirect_param'] ); ?>" value="<?php echo esc_url( blackroll_thankyou_url() ); ?>">
-			<?php endif; ?>
+			<?php
+			/*
+			 * Success/failure routing is configured IN the Sebari dashboard (the
+			 * delivered embed exposes no redirect param). Paste these page URLs
+			 * into the Sebari form's success/failure redirect settings:
+			 *   Success: /kontak/terima-kasih/
+			 *   Failure: /kontak/gagal/
+			 * Mode F (fetch) remains available as a fallback if Sebari can't redirect.
+			 */
+			?>
 
 			<p class="blackroll-field">
 				<label for="blackroll-name"><?php esc_html_e( 'Nama', 'blackroll-core' ); ?> *</label>

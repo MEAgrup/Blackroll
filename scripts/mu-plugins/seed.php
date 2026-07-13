@@ -113,7 +113,8 @@ class Blackroll_Seed_Command {
 		$this->ensure_page( 'Material & Warna', 'material-warna', '', '<!-- wp:pattern {"slug":"blackroll/page-material-color"} /-->' );
 		$this->ensure_page( 'Portofolio', 'portofolio' );
 		$this->ensure_page( 'Kontak', 'kontak', '', '<!-- wp:pattern {"slug":"blackroll/page-contact"} /-->' );
-		$this->ensure_page( 'Terima Kasih', 'terima-kasih', 'template-thankyou' );
+		$this->ensure_page( 'Terima Kasih', 'terima-kasih', 'template-thankyou', '<!-- wp:pattern {"slug":"blackroll/contact-thankyou"} /-->' );
+		$this->ensure_page( 'Pengiriman Gagal', 'gagal', 'template-thankyou', '<!-- wp:pattern {"slug":"blackroll/contact-failed"} /-->' );
 		$this->ensure_page( 'Kebijakan Privasi', 'kebijakan-privasi' );
 
 		// Set the homepage to a static front page if one is named "Beranda".

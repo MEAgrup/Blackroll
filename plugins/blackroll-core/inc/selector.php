@@ -30,6 +30,8 @@ function blackroll_selector_materials() {
 		array(
 			'blackout'     => __( 'Blackout', 'blackroll-core' ),
 			'solar_screen' => __( 'Solar Screen', 'blackroll-core' ),
+			'dimout'       => __( 'Dimout', 'blackroll-core' ),
+			'zebra'        => __( 'Zebra Blinds', 'blackroll-core' ),
 		)
 	);
 }
