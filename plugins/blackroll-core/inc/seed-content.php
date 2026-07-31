@@ -108,6 +108,11 @@ function blackroll_content_image( $media, $rel, $alt, $caption = '' ) {
 	if ( ! $url ) {
 		return '';
 	}
+	// Root-relative, not absolute: an absolute URL bakes the scheme and host into
+	// post_content, so a staging→production move or an http→https switch leaves
+	// every embedded image pointing at the old origin until someone remembers to
+	// run search-replace. The attachment id above still carries the identity.
+	$url = wp_make_link_relative( $url );
 	$fig = '<figure class="wp-block-image size-large"><img src="' . esc_url( $url ) .
 		'" alt="' . esc_attr( $alt ) . '" class="wp-image-' . $id . '"/>';
 	if ( $caption ) {

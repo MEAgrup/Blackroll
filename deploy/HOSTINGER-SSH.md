@@ -213,11 +213,21 @@ wp config set BLACKROLL_CSP_REPORT_ONLY false --raw --type=constant
 ## 9. Go-live
 
 ```bash
+wp option get siteurl                               # WAJIB sudah https:// sebelum apa pun
 wp search-replace 'https://staging.blackrollblinds.com' 'https://blackrollblinds.com' --skip-columns=guid --precise
 wp litespeed-purge all
 wp rewrite flush --hard
+wp blackroll doctor                                 # tahap 8 memastikan gambar benar-benar terkirim
 curl -s https://blackrollblinds.com/robots.txt      # pastikan TIDAK ada "Disallow: /"
 ```
+
+> **Pelajaran dari go-live pertama:** `siteurl`/`home` yang masih `http://` sementara
+> server menjawab di `https://` membuat **seluruh** gambar diblokir browser sebagai
+> mixed content, walaupun setiap file dan record database sudah benar. Selalu set
+> `siteurl`/`home` ke https lebih dulu, baru `search-replace`, baru purge cache.
+> Sejak itu gambar di dalam naskah artikel ditulis sebagai URL root-relative
+> (`/wp-content/uploads/...`), jadi perpindahan domain atau protokol berikutnya
+> tidak lagi menyeret URL lama ikut serta.
 
 Lalu di Search Console: submit sitemap Rank Math (`/sitemap_index.xml`).
 
