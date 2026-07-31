@@ -2,6 +2,9 @@
 
 Deploy is intentionally the **last** step. This is the cutover + ops reference.
 
+> For the copy-paste command sequence over SSH (clone → rsync → activate → seed → verify),
+> use **`deploy/HOSTINGER-SSH.md`**. This file covers the decisions and ops around it.
+
 ## 0. Prerequisites
 - Hostinger Managed WP, PHP ≥ 8.1, HTTPS active, LiteSpeed cache available.
 - Staging environment created (Hostinger supports staging).
@@ -16,7 +19,7 @@ Deploy is intentionally the **last** step. This is the cutover + ops reference.
 - Settings → Permalinks: **/%postname%/**.
 - Settings → Reading: Front page = **Beranda**, Posts page = **Artikel**.
 - Discussion: comments **off** (already enforced by blackroll-core).
-- Create the pages/content: run `wp blackroll seed` (WP-CLI) OR create pages manually and enter shades/projects/articles (see main README content guide). Enter real shades from the SKU sheet.
+- Create the pages/content: run `wp blackroll seed` then `wp blackroll content` (WP-CLI). The first builds the structure (pages, 24 SKUs, projects, articles, media sideload); the second writes the real Bahasa Indonesia copy for Tentang Kami, Kebijakan Privasi and the four articles. See the README content guide for the edit-ownership rules.
 
 ## 3. Content ops (MCP optional)
 - Create a **limited-role (Editor) AI user**, generate an Application Password for MCP content-entry, **revoke after** the content phase (PATCH-18).
@@ -60,5 +63,5 @@ Deploy is intentionally the **last** step. This is the cutover + ops reference.
 ## Open dependencies still to close
 - #7 Sebari `redirect_url` support (drives step 4 choice).
 - Official logo vector (currently a reconstructed placeholder mark).
-- Kebijakan Privasi copy (MEA).
+- Kebijakan Privasi — copy is written; needs client/legal sign-off before go-live.
 - EN translations (progressive, D6).

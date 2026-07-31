@@ -59,6 +59,7 @@ require_once BLACKROLL_CORE_DIR . 'inc/sebari.php';
 require_once BLACKROLL_CORE_DIR . 'inc/selector.php';
 require_once BLACKROLL_CORE_DIR . 'inc/portfolio.php';
 require_once BLACKROLL_CORE_DIR . 'inc/settings-page.php';
+require_once BLACKROLL_CORE_DIR . 'inc/seed-content.php';
 require_once BLACKROLL_CORE_DIR . 'inc/cli-seed.php';
 
 /**

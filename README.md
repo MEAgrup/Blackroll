@@ -57,7 +57,7 @@ Requires Docker (for `@wordpress/env`) and Node 18+.
 ```bash
 npm install
 npm run start          # boots WordPress at http://localhost:8888  (admin: http://localhost:8888/wp-admin, admin/password)
-npm run seed           # sample pages, shades, projects, 3 article stubs
+npm run seed           # pages, 24 shades, projects, 4 published articles + real photos
 npm run build          # minify + code-split JS into assets/js/dist
 npm run build:analyze  # prints bundle analysis; FAILS if three.js leaks off the Product chunk
 npm run qa             # Lighthouse CI against wp-env (mobile-throttled, asserts Module 10 gates)
@@ -89,6 +89,29 @@ Editing UX is native (rawer than SCF) — here is the step-by-step.
 ### Add an article
 Standard **Posts → Add New** with a category (Panduan / Inspirasi / Produk). Comments are off site-wide. Author shows as "Tim Blackroll".
 
+### Where the shipped copy lives
+
+The launch copy — **Tentang Kami**, **Kebijakan Privasi** and the four articles — is
+authored in `plugins/blackroll-core/inc/seed-content.php`, not typed into the DB. It is
+versioned, reviewable in a PR, and re-appliable to any environment:
+
+```bash
+wp blackroll content              # write copy into pages/articles still holding placeholders
+wp blackroll content --dry-run    # show what would change
+wp blackroll content --force      # overwrite even editor-modified content
+```
+
+Without `--force` the command never clobbers a page an editor has already touched — it
+compares against the placeholder markers the old seed wrote and skips anything else.
+
+**Two ways to edit copy, pick one per page:**
+- *Copy owned by the repo* — edit `seed-content.php`, commit, `git pull` on the server, re-run `wp blackroll content --force`.
+- *Copy owned by the content team* — edit in wp-admin and never run `--force` on that page again.
+
+Articles are written from Blackroll's own brand material in `seed-assets/` (the 5-layer
+blackout spec sheet, the installation guide, the product spec grid). No pricing, warranty
+terms or founding dates are asserted anywhere — those need client confirmation first.
+
 ---
 
 ## Placeholders to swap (open dependencies)
@@ -98,8 +121,9 @@ Standard **Posts → Add New** with a category (Panduan / Inspirasi / Produk). C
 | Sebari embed (form_id 971, group 5260, user 139954, +email) | ✅ **wired (real)** | `inc/sebari.php` → `blackroll_sebari_config()` | — (confirm redirect_url support, Open Dep #7) |
 | SKU/shade data | ✅ **real list seeded** (24 SKUs, 4 materials) | `scripts/mu-plugins/seed.php` | — |
 | Product/portfolio photos | ✅ **real photos** (WebP, `seed-assets/`) | `plugins/blackroll-core/seed-assets/` | more via Drive folder as needed |
-| Seed article bodies | placeholder (drafts + real featured images) | Posts | MEA content team copy |
-| Kebijakan Privasi copy | placeholder | `/kebijakan-privasi/` page | MEA-provided wording |
+| Article bodies | ✅ **written** (4 published articles, ID) | `inc/seed-content.php` | — |
+| Tentang Kami copy | ✅ **written** (ID) | `inc/seed-content.php` | — |
+| Kebijakan Privasi copy | ✅ **drafted** (ID) — needs client/legal sign-off | `inc/seed-content.php` | MEA/legal review |
 | Logo + favicon | placeholder reconstruction | `assets/images/favicon.svg`, `logo-mark.svg` | Official brand SVG/PNG |
 | EN translations | placeholder | Polylang | Progressive per D6 |
 | Domain | default | `BLACKROLL_SITE_URL` (`https://blackrollblinds.com`) | Final production domain |
@@ -137,4 +161,5 @@ SEO layer (Rank Math config, hreflang, schema), security enforce flip (CSP repor
 - [x] **Step 11** — SEO layer: OG/Twitter/canonical fallback (defers to Rank Math), robots.txt env-aware, default OG image, hreflang fallback
 - [x] **Step 12** — Security: CSP + headers, XML-RPC off, DISALLOW_FILE_EDIT, attachment/author hygiene, uploads PHP-exec block (deploy/)
 - [x] **Step 13** — A11y + QA: checklist (deploy/QA-CHECKLIST.md), Lighthouse CI config, analyzer gate
-- [ ] Deploy — see `deploy/DEPLOY.md` (last step, on Hostinger staging→production)
+- [x] **Step 14** — Editorial content: real ID copy for Tentang Kami, Kebijakan Privasi and 4 published articles (`inc/seed-content.php`, `wp blackroll content`)
+- [ ] Deploy — `deploy/HOSTINGER-SSH.md` (command runbook) / `deploy/DEPLOY.md` (decisions + ops)

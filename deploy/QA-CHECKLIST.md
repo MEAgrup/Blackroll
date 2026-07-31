@@ -33,6 +33,13 @@ Run `npm run start && npm run seed`, then `npm run qa` (Lighthouse CI) and this 
 - [ ] XML-RPC off, file editing disabled, uploads PHP-exec blocked, comments off.
 - [ ] Backup runs + test restore; content team = Editor role.
 
+## Content
+- [ ] `wp blackroll seed` + `wp blackroll content` ran clean; no page still says "(konten contoh)".
+- [ ] Tentang Kami, Kebijakan Privasi and all 4 articles are published and render their images.
+- [ ] Kebijakan Privasi has client/legal sign-off (WA number + address in it are correct).
+- [ ] Internal links in the articles resolve (post permalinks are root-level under `/%postname%/`).
+- [ ] Categories Panduan / Produk / Inspirasi each have at least one published article.
+
 ## Functional
 - [ ] Sebari submit end-to-end → WhatsApp automation; success + failure redirects land on the right pages.
 - [ ] Selector filters shades by series + material; preview swaps; no broken images (fallback chain).
