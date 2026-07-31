@@ -54,6 +54,9 @@ if ( ! class_exists( 'Blackroll_Doctor_Command' ) ) {
 			$this->section( '7. Content coverage' );
 			$this->check_coverage();
 
+			$this->section( '8. Live delivery (what the browser actually gets)' );
+			$this->check_delivery();
+
 			$this->summary();
 		}
 
@@ -310,6 +313,22 @@ if ( ! class_exists( 'Blackroll_Doctor_Command' ) ) {
 			$this->coverage_for( 'shade', 'Shades', true );
 			$this->coverage_for( 'project', 'Portfolio projects', false );
 			$this->coverage_for( 'post', 'Articles', false );
+
+			// WordPress's own starter content has no featured image and skews the
+			// article count above — it should not survive to launch either.
+			$defaults = array();
+			foreach ( array( 'hello-world' => 'post', 'sample-page' => 'page' ) as $slug => $type ) {
+				$found = get_page_by_path( $slug, OBJECT, $type );
+				if ( $found && 'trash' !== $found->post_status ) {
+					$defaults[] = "{$found->post_title} (ID {$found->ID})";
+				}
+			}
+			if ( $defaults ) {
+				$this->warn(
+					'default WordPress content still present: ' . implode( ', ', $defaults ),
+					'wp post delete <ID> --force'
+				);
+			}
 		}
 
 		/**
@@ -356,6 +375,106 @@ if ( ! class_exists( 'Blackroll_Doctor_Command' ) ) {
 			} else {
 				$this->pass( "{$label}: all {$total} have an image" );
 			}
+		}
+
+		/**
+		 * Fetch one theme asset and one uploaded image exactly as the page
+		 * references them. Everything above can pass while the browser still
+		 * gets a 404, a 403 or a protocol downgrade.
+		 */
+		private function check_delivery() {
+			$theme_url = trailingslashit( get_template_directory_uri() ) . 'assets/images/rooms/ruang-tamu.webp';
+			$this->probe( 'theme asset', $theme_url );
+
+			$att = get_posts(
+				array(
+					'post_type'      => 'attachment',
+					'post_status'    => 'inherit',
+					'post_mime_type' => 'image',
+					'posts_per_page' => 1,
+					'fields'         => 'ids',
+				)
+			);
+			if ( ! empty( $att ) ) {
+				$url = wp_get_attachment_image_url( $att[0], 'full' );
+				if ( $url ) {
+					$this->probe( 'uploaded image', $url );
+				}
+			}
+
+			// If the site answers on https but stores http, every asset URL in
+			// the HTML is a protocol downgrade on an https page.
+			$home = get_option( 'home' );
+			if ( 'http' === wp_parse_url( $home, PHP_URL_SCHEME ) ) {
+				$https = set_url_scheme( $home, 'https' );
+				$res   = wp_remote_get( $https, array( 'timeout' => 15, 'redirection' => 0 ) );
+				if ( ! is_wp_error( $res ) ) {
+					$code = (int) wp_remote_retrieve_response_code( $res );
+					if ( $code > 0 && $code < 400 ) {
+						$this->fail(
+							"the site answers on {$https} (HTTP {$code}) but siteurl/home are stored as http:// — visitors land on https while every image URL in the HTML says http",
+							'wp option update siteurl "' . $https . '" && wp option update home "' . $https . '" && wp search-replace "' . $home . '" "' . $https . '" --skip-columns=guid --precise && wp litespeed-purge all'
+						);
+					}
+				}
+			}
+		}
+
+		/**
+		 * Request a URL without following redirects and report what came back.
+		 *
+		 * @param string $label Human label.
+		 * @param string $url   URL to probe.
+		 */
+		private function probe( $label, $url ) {
+			$res = wp_remote_get(
+				$url,
+				array(
+					'timeout'     => 15,
+					'redirection' => 0,
+					'headers'     => array( 'Referer' => home_url( '/' ) ),
+				)
+			);
+
+			if ( is_wp_error( $res ) ) {
+				$this->fail( "{$label}: request failed — " . $res->get_error_message(), $url );
+				return;
+			}
+
+			$code = (int) wp_remote_retrieve_response_code( $res );
+			$type = (string) wp_remote_retrieve_header( $res, 'content-type' );
+			$loc  = (string) wp_remote_retrieve_header( $res, 'location' );
+
+			if ( 200 === $code && 0 === strpos( $type, 'image/' ) ) {
+				$this->pass( "{$label}: HTTP 200, {$type}" );
+				return;
+			}
+
+			if ( $code >= 300 && $code < 400 ) {
+				$this->warn( "{$label}: HTTP {$code} → {$loc}", 'a redirect here usually means the http/https mismatch above' );
+				$this->info( $url );
+				return;
+			}
+
+			if ( 403 === $code ) {
+				$this->fail(
+					"{$label}: HTTP 403 — the server refuses to serve the file",
+					'check hotlink protection in hPanel and any Deny rules in .htaccess'
+				);
+				$this->info( $url );
+				return;
+			}
+
+			if ( 404 === $code ) {
+				$this->fail(
+					"{$label}: HTTP 404 — the URL in the page does not exist on disk",
+					'for theme assets re-run the rsync; for uploads re-run wp blackroll seed'
+				);
+				$this->info( $url );
+				return;
+			}
+
+			$this->fail( "{$label}: HTTP {$code}, content-type {$type} (expected an image)", $url );
 		}
 
 		private function summary() {
