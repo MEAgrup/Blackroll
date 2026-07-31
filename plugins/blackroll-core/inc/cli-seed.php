@@ -61,6 +61,9 @@ if ( ! class_exists( 'Blackroll_Seed_Command' ) ) {
 			}
 			$path = defined( 'BLACKROLL_CORE_DIR' ) ? BLACKROLL_CORE_DIR . 'seed-assets/' . $rel : '';
 			if ( ! $path || ! file_exists( $path ) ) {
+				// Loud, not silent: a missing asset means every image that depends
+				// on it will render blank, and the seed would otherwise look clean.
+				WP_CLI::warning( "seed asset missing on disk: seed-assets/{$rel}" );
 				return 0;
 			}
 			require_once ABSPATH . 'wp-admin/includes/media.php';
@@ -82,11 +85,19 @@ if ( ! class_exists( 'Blackroll_Seed_Command' ) ) {
 				return $this->media_cache[ $rel ];
 			}
 
+			$uploads = wp_upload_dir();
+			if ( ! empty( $uploads['error'] ) ) {
+				WP_CLI::warning( 'uploads dir not usable: ' . $uploads['error'] );
+				return 0;
+			}
+
 			$tmp = wp_tempnam( basename( $path ) );
 			copy( $path, $tmp );
 			$id = media_handle_sideload( array( 'name' => basename( $path ), 'tmp_name' => $tmp ), 0 );
 			if ( is_wp_error( $id ) ) {
 				@unlink( $tmp );
+				// Without this the seed reports success while every image is blank.
+				WP_CLI::warning( "sideload failed for {$rel}: " . $id->get_error_message() );
 				return 0;
 			}
 			if ( $alt ) {

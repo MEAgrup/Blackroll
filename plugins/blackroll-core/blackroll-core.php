@@ -61,6 +61,7 @@ require_once BLACKROLL_CORE_DIR . 'inc/portfolio.php';
 require_once BLACKROLL_CORE_DIR . 'inc/settings-page.php';
 require_once BLACKROLL_CORE_DIR . 'inc/seed-content.php';
 require_once BLACKROLL_CORE_DIR . 'inc/cli-seed.php';
+require_once BLACKROLL_CORE_DIR . 'inc/cli-doctor.php';
 
 /**
  * Flush rewrite rules on activation/deactivation so CPT archives and localized

@@ -77,6 +77,8 @@
 		var img = new Image();
 		img.onload = function () {
 			preview.src = src;
+			// Server-rendered with [hidden] when no shade had an image yet.
+			preview.removeAttribute( 'hidden' );
 			preview.style.opacity = '1';
 		};
 		img.src = src;

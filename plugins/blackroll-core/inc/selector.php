@@ -153,7 +153,8 @@ add_shortcode(
 			</div>
 
 			<div class="blackroll-selector__preview">
-				<img src="<?php echo esc_url( $first_preview ); ?>" alt="<?php esc_attr_e( 'Pratinjau roller blinds Blackroll', 'blackroll-core' ); ?>" width="900" height="900" loading="lazy" decoding="async">
+				<?php // An empty src makes the browser re-request the page itself as an image; keep the element for the JS swap but leave it hidden until it has a real source. ?>
+				<img<?php echo $first_preview ? ' src="' . esc_url( $first_preview ) . '"' : ' hidden'; ?> alt="<?php esc_attr_e( 'Pratinjau roller blinds Blackroll', 'blackroll-core' ); ?>" width="900" height="900" loading="lazy" decoding="async">
 				<p class="blackroll-selector__label" aria-live="polite"></p>
 			</div>
 

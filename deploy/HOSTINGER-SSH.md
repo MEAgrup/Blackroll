@@ -141,6 +141,27 @@ wp post list --post_type=page --fields=ID,post_name,post_status
 
 ## 6. Verifikasi cepat
 
+Kalau ada gambar yang tidak muncul, jalankan ini dulu — ia menelusuri seluruh jalur
+gambar (theme asset → URL situs → folder uploads → dukungan WebP → Media Library →
+cakupan per konten) dan menyebutkan perbaikannya:
+
+```bash
+wp blackroll doctor
+```
+
+Penyebab paling sering, sesuai urutan yang diperiksa perintah itu:
+
+| Gejala | Penyebab | Perbaikan |
+|---|---|---|
+| Semua gambar konten kosong, Media Library kosong | `wp blackroll seed` belum jalan | `wp blackroll seed` |
+| Seed "sukses" tapi Media Library tetap kosong | PHP tanpa dukungan WebP → sideload gagal diam-diam | aktifkan WebP di GD (hPanel → PHP Configuration), lalu seed ulang |
+| Gambar tema (foto ruangan) 404 | folder `assets/images/` tidak ikut ter-upload | ulangi `rsync` di langkah 2 |
+| Gambar 403 | `.htaccess` di `uploads/` memblokir semua, bukan hanya PHP | pakai ulang `deploy/uploads.htaccess` |
+| Gambar diblokir browser | `siteurl` masih `http://` di halaman https | `wp search-replace` ke https |
+| Halaman lama masih tampil | cache LiteSpeed | `wp litespeed-purge all` |
+
+### Verifikasi manual
+
 ```bash
 wp post list --post_type=post  --fields=ID,post_name,post_status
 wp post list --post_type=shade --format=count      # harus 24
