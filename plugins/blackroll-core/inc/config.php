@@ -100,6 +100,34 @@ function blackroll_sebari_submit_mode() {
 }
 
 /**
+ * Homepage hero background video (client decision 2026-09: premium look over
+ * loading-speed score — see deploy/QA-CHECKLIST.md). Single swappable config
+ * point: empty by default so the hero stays typography-only (current, safe
+ * behaviour) until the rollerblind team's asset lands — set the constant or
+ * hook the filter once a real file exists, nothing else needs to change.
+ *
+ * @return string Absolute URL, or '' to render no video element at all.
+ */
+function blackroll_hero_video_url() {
+	$default = defined( 'BLACKROLL_HERO_VIDEO_URL' ) ? BLACKROLL_HERO_VIDEO_URL : '';
+	return apply_filters( 'blackroll_hero_video_url', $default );
+}
+
+/**
+ * Poster image shown before the hero video plays, and to every visitor who
+ * gets the video gated off (prefers-reduced-motion, slow/metered connection,
+ * or autoplay blocked by the browser) — see assets/js/motion.js bootHeroVideo().
+ *
+ * @return string Absolute URL.
+ */
+function blackroll_hero_video_poster() {
+	$default = defined( 'BLACKROLL_HERO_VIDEO_POSTER' )
+		? BLACKROLL_HERO_VIDEO_POSTER
+		: get_template_directory_uri() . '/assets/images/rooms/ruang-tamu.webp';
+	return apply_filters( 'blackroll_hero_video_poster', $default );
+}
+
+/**
  * Mark the post-submit pages noindex,follow (PATCH-04 / PATCH-09). Runs early
  * so it also works when Rank Math is absent; Rank Math will additionally honor
  * its own robots meta on these pages.

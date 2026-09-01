@@ -44,16 +44,9 @@ add_action(
 );
 
 /**
- * Add width/height-friendly lazy loading defaults. WP already lazy-loads
- * below-the-fold images; we make sure the first in-view image is eager
- * (handled per-template) and everything else stays lazy + async decode.
+ * Note: eager/lazy loading is set explicitly per-template on each <img>
+ * (see home-rooms.php, portfolio.php, etc. — every image already carries an
+ * explicit `loading` attribute plus width/height for CLS). An earlier
+ * `wp_img_tag_add_loading_attr` filter here was a no-op passthrough (returned
+ * $value unchanged) and has been removed as dead code.
  */
-add_filter(
-	'wp_img_tag_add_loading_attr',
-	function ( $value, $image, $context ) {
-		unset( $image, $context );
-		return $value;
-	},
-	10,
-	3
-);

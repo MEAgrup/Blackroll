@@ -39,6 +39,51 @@ add_action(
 	1
 );
 
+/**
+ * Enqueue a built ES module bundle (scripts/build.mjs output) if — and only
+ * if — it has actually been built. `motion.js` and `product-3d.js` both
+ * contain real `import` statements (lottie-web, three) that do not resolve
+ * as bare specifiers in a plain browser, so unlike the vanilla scripts below
+ * they cannot be enqueued from source in an un-built dev environment. If
+ * `npm run build` hasn't run yet, this silently enqueues nothing — every
+ * motion effect it would have powered already has a static fallback in its
+ * markup (poster image, fallback text, or nothing at all), so the page is
+ * still complete and correct, just without the premium motion.
+ *
+ * @param string $handle    Script handle.
+ * @param string $dist_name File name under assets/js/dist/ (without path).
+ * @param array  $deps      Script module dependencies (handles).
+ */
+function blackroll_enqueue_module( $handle, $dist_name, $deps = array() ) {
+	$rel  = 'assets/js/dist/' . $dist_name;
+	$path = BLACKROLL_DIR . '/' . $rel;
+	if ( ! file_exists( $path ) ) {
+		return;
+	}
+	$src = BLACKROLL_URI . '/' . $rel;
+	$ver = BLACKROLL_VERSION . '.' . filemtime( $path );
+
+	if ( function_exists( 'wp_enqueue_script_module' ) ) {
+		// WP 6.5+ Script Modules API — the correct, native way to load ESM.
+		wp_enqueue_script_module( $handle, $src, $deps, $ver );
+		return;
+	}
+
+	// Fallback for older WP: classic enqueue + force type="module" on this handle.
+	wp_enqueue_script( $handle, $src, array(), $ver, array( 'in_footer' => true ) );
+	add_filter(
+		'script_loader_tag',
+		function ( $tag, $tag_handle ) use ( $handle ) {
+			if ( $tag_handle !== $handle ) {
+				return $tag;
+			}
+			return str_replace( ' src=', ' type="module" src=', $tag );
+		},
+		10,
+		2
+	);
+}
+
 add_action(
 	'wp_enqueue_scripts',
 	function () {
@@ -58,18 +103,17 @@ add_action(
 			BLACKROLL_VERSION
 		);
 
-		// Motion loader: lazy Lottie via IntersectionObserver, reduced-motion aware.
-		// Deferred so it never blocks paint. It self-limits on prefers-reduced-motion.
-		wp_enqueue_script(
-			'blackroll-motion',
-			BLACKROLL_URI . '/assets/js/motion.js',
-			array(),
-			BLACKROLL_VERSION,
-			array(
-				'strategy'  => 'defer',
-				'in_footer' => true,
-			)
-		);
+		// Motion loader: lazy Lottie (real player, bundled) + gated hero video.
+		// Deferred so it never blocks paint; self-limits on prefers-reduced-motion
+		// and slow/metered connections (see assets/js/motion.js).
+		blackroll_enqueue_module( 'blackroll-motion', 'motion.js' );
+
+		// Product-page 3D showcase (client decision 2026-09 — premium look over
+		// loading-speed score). Only where the theme actually renders a
+		// [data-blackroll-3d] container, so it never loads elsewhere.
+		if ( is_page_template( 'template-product.html' ) ) {
+			blackroll_enqueue_module( 'blackroll-product-3d', 'product-3d.js' );
+		}
 	}
 );
 

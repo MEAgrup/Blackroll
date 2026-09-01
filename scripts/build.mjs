@@ -37,6 +37,62 @@ const options = {
 	logLevel: 'info',
 };
 
+/**
+ * Prove three.js only ever loads for a visitor of the Product page.
+ *
+ * esbuild's code-splitting extracts a dynamically-imported dependency (three)
+ * into its own shared chunk file, named by content hash — not by whichever
+ * entry imports it — so a naive "does this output's filename contain
+ * product-3d" check flags that chunk as a false positive even though nothing
+ * else references it. The correct check is reachability: walk the `imports`
+ * graph from every entry point that is NOT product-3d, and fail only if
+ * three.js is reachable from one of those.
+ *
+ * @param {import('esbuild').Metafile} metafile
+ * @param {Record<string,string>} entryMap
+ */
+function assertThreeIsolatedToProduct( metafile, entryMap ) {
+	const outputs = metafile.outputs;
+	const outputByEntry = new Map();
+	for ( const [ file, meta ] of Object.entries( outputs ) ) {
+		if ( meta.entryPoint ) {
+			outputByEntry.set( meta.entryPoint, file );
+		}
+	}
+
+	function reachableFiles( startFile ) {
+		const seen = new Set();
+		const stack = [ startFile ];
+		while ( stack.length ) {
+			const file = stack.pop();
+			if ( seen.has( file ) || ! outputs[ file ] ) {
+				continue;
+			}
+			seen.add( file );
+			for ( const imp of outputs[ file ].imports || [] ) {
+				stack.push( imp.path );
+			}
+		}
+		return seen;
+	}
+
+	for ( const [ name, entrySrc ] of Object.entries( entryMap ) ) {
+		if ( name === 'product-3d' ) {
+			continue;
+		}
+		const outFile = outputByEntry.get( entrySrc );
+		if ( ! outFile ) {
+			continue;
+		}
+		for ( const file of reachableFiles( outFile ) ) {
+			const inputs = Object.keys( outputs[ file ].inputs || {} );
+			if ( inputs.some( ( p ) => /node_modules\/three\//.test( p ) ) ) {
+				throw new Error( `three.js leaked into the "${ name }" bundle via ${ file }` );
+			}
+		}
+	}
+}
+
 async function run() {
 	if ( watch ) {
 		const ctx = await context( options );
@@ -48,12 +104,8 @@ async function run() {
 	if ( analyze && result.metafile ) {
 		const { analyzeMetafile } = await import( 'esbuild' );
 		console.log( await analyzeMetafile( result.metafile ) );
-		// Guard: fail if three.js ever appears outside the product-3d chunk.
-		for ( const [ file, meta ] of Object.entries( result.metafile.outputs ) ) {
-			if ( /three/.test( JSON.stringify( meta.inputs ) ) && ! /product-3d/.test( file ) ) {
-				throw new Error( `three.js leaked into non-Product bundle: ${ file }` );
-			}
-		}
+		assertThreeIsolatedToProduct( result.metafile, entries );
+		console.log( 'OK: three.js is isolated to the product-3d bundle.' );
 	}
 }
 

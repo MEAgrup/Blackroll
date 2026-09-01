@@ -15,6 +15,13 @@
 <p><?php esc_html_e( 'Motorized Blinds Blackroll adalah tier premium/convenience — roller blinds bermotor yang dikontrol dengan remote, ditenagai motor Dooya yang halus, senyap, dan andal. Sama seperti seri Manual: tahan air & minyak, anti-bakteri, anti-jamur, desain minimalis, dan banyak pilihan warna.', 'blackroll' ); ?></p>
 <!-- /wp:paragraph -->
 
+<?php /* Premium 3D showcase (client decision 2026-09) — real model/texture pending from the rollerblind team (feedback #5); mount3D() ships a generic monochrome placeholder scene. Gated by assets/js/product-3d.js: falls back to the text below on prefers-reduced-motion, no WebGL, or a slow/metered connection. */ ?>
+<!-- wp:html -->
+<div class="blackroll-3d-slot" data-blackroll-3d>
+	<p class="blackroll-3d-slot__fallback"><?php esc_html_e( 'Pratinjau 3D interaktif — tampil di perangkat yang mendukung.', 'blackroll' ); ?></p>
+</div>
+<!-- /wp:html -->
+
 <!-- wp:heading {"level":2,"fontSize":"x-large"} -->
 <h2 class="wp-block-heading has-x-large-font-size"><?php esc_html_e( 'Keunggulan Produk', 'blackroll' ); ?></h2>
 <!-- /wp:heading -->

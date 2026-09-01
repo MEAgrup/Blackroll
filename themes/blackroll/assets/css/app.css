@@ -372,6 +372,60 @@ video {
 	height: auto;
 }
 
+/* ---------- Premium hero video + Product 3D showcase ----------
+ * Client decision (2026-09): premium look over loading-speed score on these
+ * two spots — see deploy/QA-CHECKLIST.md. Both stay no-op/static until
+ * assets/js/motion.js and product-3d.js actually mount (built bundle present
+ * + capability gate passes), so there is no layout shift either way: the
+ * poster/fallback fills the same box the video/canvas would take over. */
+
+.blackroll-hero {
+	position: relative;
+	overflow: hidden;
+}
+.blackroll-hero__media {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	overflow: hidden;
+}
+.blackroll-hero__video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0.5; /* keeps the H1/paragraph legible over motion, on top of the dark bg */
+}
+/* Lift the real content above the absolutely-positioned video layer. */
+.blackroll-hero > *:not(.blackroll-hero__media) {
+	position: relative;
+	z-index: 1;
+}
+
+.blackroll-3d-slot {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	max-width: 480px;
+	margin: var(--wp--preset--spacing--40, 2rem) auto;
+	background: var(--wp--preset--color--charcoal);
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+}
+.blackroll-3d-slot__canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+.blackroll-3d-slot__fallback {
+	/* On the dark --charcoal background, --grey-text (tuned for AA on white)
+	   would fail contrast — --grey is the one that passes AA on dark here. */
+	color: var(--wp--preset--color--grey);
+	text-align: center;
+	padding: 0 1.5rem;
+	font-size: var(--wp--preset--font-size--small);
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
