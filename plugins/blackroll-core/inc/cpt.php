@@ -24,13 +24,23 @@ function blackroll_register_cpts() {
 				'edit_item'     => __( 'Edit Shade', 'blackroll-core' ),
 				'menu_name'     => __( 'Shades', 'blackroll-core' ),
 			),
-			'public'        => true,
-			'has_archive'   => false,
-			'show_in_rest'  => true,
-			'menu_icon'     => 'dashicons-art',
-			'menu_position' => 26,
-			'supports'      => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
-			'rewrite'       => array( 'slug' => 'warna', 'with_front' => false ),
+			// Not a public front-end content type — shades are surfaced only via
+			// [blackroll_selector] on Material & Warna, never linked to a single
+			// permalink. Keeping 'public' => true generated a public /warna/{slug}/
+			// page per SKU (thin/duplicate content: no real body, just meta fields
+			// already shown in the selector). Admin UI + REST (block editor + MCP
+			// content-entry, PATCH-18) are re-enabled explicitly below.
+			'public'              => false,
+			'publicly_queryable'  => false,
+			'exclude_from_search' => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'show_in_rest'        => true,
+			'has_archive'         => false,
+			'menu_icon'           => 'dashicons-art',
+			'menu_position'       => 26,
+			'supports'            => array( 'title', 'editor', 'thumbnail', 'custom-fields' ),
+			'rewrite'             => false,
 		)
 	);
 
