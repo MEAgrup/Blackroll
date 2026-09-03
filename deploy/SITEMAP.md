@@ -46,7 +46,7 @@ manapun, dan isinya menduplikasi konten yang sudah tampil di halaman publik di a
 | `/kontak/terima-kasih/`, `/kontak/gagal/` | Halaman redirect sukses/gagal form Sebari | Perlu ada (bukan bug) tapi tidak boleh ter-index — sudah `noindex,follow` (`config.php`). |
 | URL attachment gambar (`/nama-gambar/`) | WP generate halaman tersendiri utk tiap media | Sudah di-redirect ke file/induk (`security.php`, PATCH-15). |
 | Author archive, date archive (`/author/...`, `/2026/09/...`) | Default WP untuk semua situs | Situs ini 1 author ("Tim Blackroll") dan bukan blog kronologis — archive ini cuma duplikat `/artikel/`. *(Belum ada penanganan eksplisit di kode — dicatat sebagai item lanjutan, lihat catatan di bawah.)* |
-| Halaman search (`/?s=...`) | Default WP | Tidak perlu di-disallow — jarang di-crawl, risiko rendah, tapi tetap bukan bagian dari sitemap. |
+| Halaman search (`/?s=...`) | Fitur search aktif (`search.html`) | PATCH-09 (PRD Amendment 01) sebenarnya me-lock default "search disabled" persis karena alasan ini (thin/duplicate content) — situs ini shipped dengan search aktif sebagai override. Fitur tetap dipertahankan (berguna untuk visitor), tapi sekarang `noindex,follow` (`config.php`, `is_search()`) supaya tidak jadi risiko SEO yang di-flag PATCH-09. |
 
 **Item lanjutan (belum dikerjakan di revisi ini, perlu keputusan/waktu terpisah):**
 author archive & date archive belum secara eksplisit di-redirect/noindex di kode. Karena

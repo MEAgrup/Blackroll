@@ -128,14 +128,23 @@ function blackroll_hero_video_poster() {
 }
 
 /**
- * Mark the post-submit pages noindex,follow (PATCH-04 / PATCH-09). Runs early
- * so it also works when Rank Math is absent; Rank Math will additionally honor
- * its own robots meta on these pages.
+ * Mark the post-submit pages, and search results, noindex,follow
+ * (PATCH-04 / PATCH-09). Runs early so it also works when Rank Math is
+ * absent; Rank Math will additionally honor its own robots meta on these
+ * pages.
+ *
+ * Search results: PATCH-09's own rationale for defaulting search to
+ * "disabled" on a company-profile site is exactly this — a `/?s=` results
+ * page is thin/duplicate content (it just re-lists content already indexed
+ * on its own page). This build shipped `search.html` (search enabled, not
+ * PATCH-09's stated default), so — rather than removing a working feature —
+ * the noindex here closes the SEO risk PATCH-09 was guarding against while
+ * keeping search usable for visitors.
  */
 add_action(
 	'wp_head',
 	function () {
-		if ( blackroll_is_page_role( 'thankyou' ) || blackroll_is_page_role( 'failed' ) ) {
+		if ( blackroll_is_page_role( 'thankyou' ) || blackroll_is_page_role( 'failed' ) || is_search() ) {
 			echo '<meta name="robots" content="noindex,follow">' . "\n";
 		}
 	},

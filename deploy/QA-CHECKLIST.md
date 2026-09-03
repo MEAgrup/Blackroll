@@ -24,6 +24,7 @@ Run `npm run start && npm run seed`, then `npm run qa` (Lighthouse CI) and this 
 - [ ] Schema valid (Rich Results): Organization, LocalBusiness, Product, Article, BreadcrumbList.
 - [ ] Rank Math sitemap present (core wp-sitemap disabled); robots.txt correct (production allows).
 - [ ] Thank-you `/kontak/terima-kasih/` + `/kontak/gagal/` are `noindex`.
+- [ ] Search results (e.g. `/?s=test`) are `noindex,follow` (PATCH-09 — search ships enabled on this build rather than PRD's default-disabled, so this closes the thin-content risk PATCH-09 was guarding against).
 - [ ] After `wp rewrite flush`: `/warna/{any-shade-slug}/`, `/seri-warna/*` and `/tipe-proyek/*` all return 404 (shade CPT + these taxonomies are intentionally not public — see `deploy/SITEMAP.md`). If any of these still 200, the rewrite cache is stale or the CPT/taxonomy registration reverted.
 - [ ] Sitemap matches `deploy/SITEMAP.md` — no unlisted URL shows up in Rank Math's sitemap or Search Console coverage.
 
