@@ -48,13 +48,13 @@ tidak pernah bisa diakses publik:
 mkdir -p ~/src && cd ~/src
 git clone https://github.com/MEAgrup/Blackroll.git blackroll
 cd blackroll
-git checkout claude/blackroll-website-content-1t2er9
+git checkout claude/blackroll-blinds-revisi-ij6kuj
 ```
 
 Pembaruan berikutnya cukup:
 
 ```bash
-cd ~/src/blackroll && git pull origin claude/blackroll-website-content-1t2er9
+cd ~/src/blackroll && git pull origin claude/blackroll-blinds-revisi-ij6kuj
 ```
 
 ---
@@ -68,6 +68,16 @@ rsync -a --delete ~/src/blackroll/plugins/blackroll-core/    "$WPROOT/wp-content
 
 `--delete` membuat folder di server persis sama dengan repo — jangan pernah mengedit
 file theme/plugin langsung di server, karena akan tertimpa pada sinkronisasi berikutnya.
+
+> **Kalau ini update dari revisi sebelumnya (bukan install pertama):** branch ini mengubah
+> registrasi CPT `shade` dan taxonomy `color_series`/`project_type` jadi non-publik (fix
+> duplicate content — lihat `deploy/SITEMAP.md`). Rewrite rule lama tetap ter-cache sampai
+> di-flush, jadi setelah `rsync` di atas **wajib** jalankan:
+> ```bash
+> wp rewrite flush --hard
+> ```
+> lalu verifikasi `/warna/{sku}/`, `/seri-warna/*`, `/tipe-proyek/*` benar-benar 404 (lihat
+> `deploy/QA-CHECKLIST.md`).
 
 Aktifkan:
 
@@ -175,14 +185,15 @@ Buka manual: `/`, `/tentang-kami/`, `/produk/blinds-manual/`, `/material-warna/`
 
 ---
 
-## 7. Form Sebari (Open Dependency #7)
+## 7. Form Sebari (Open Dependency #7 — ✅ sudah dikonfirmasi Bisa, 2026-09)
 
-Login ke dashboard Sebari, buka form `971`, isi redirect:
+Tim Sebari sudah konfirmasi `redirect_url` didukung — Mode R (redirect) jalan sesuai default
+kode, tidak perlu ganti apa pun. Tinggal login ke dashboard Sebari, buka form `971`, isi redirect:
 
 - Sukses → `https://blackrollblinds.com/kontak/terima-kasih/`
 - Gagal → `https://blackrollblinds.com/kontak/gagal/`
 
-Kalau Sebari **tidak** mendukung redirect, ubah ke Mode F:
+(Cadangan saja, tidak diperkirakan perlu) Kalau suatu saat redirect Sebari berhenti berfungsi:
 
 ```bash
 wp config set BLACKROLL_SEBARI_SUBMIT_MODE fetch --type=constant
@@ -235,9 +246,9 @@ Lalu di Search Console: submit sitemap Rank Math (`/sitemap_index.xml`).
 
 ## Yang masih menunggu dari klien
 
-| Item | Dampak bila belum ada |
-|---|---|
-| Logo & favicon vektor resmi | Saat ini memakai rekonstruksi placeholder |
-| Review legal untuk Kebijakan Privasi | Naskah sudah lengkap, perlu persetujuan klien/legal |
-| Alamat & jam operasional final | Schema LocalBusiness memakai data dari Settings → Blackroll |
-| Terjemahan EN | Progresif sesuai keputusan D6 — halaman ID sudah lengkap |
+| Item | Status | Dampak bila belum ada |
+|---|---|---|
+| Logo & favicon vektor resmi | ⏳ masih menunggu (Tim Rollerblind) | Saat ini memakai rekonstruksi placeholder |
+| Review legal Kebijakan Privasi | ✅ **sign-off selesai (2026-09)** | Naskah final belum di-upload — draft di `seed-content.php` masih dipakai sampai file final masuk, lalu jalankan ulang `wp blackroll content --force` untuk halaman itu saja |
+| Alamat & jam operasional final | ⏳ | Schema LocalBusiness memakai data dari Settings → Blackroll |
+| Terjemahan EN | ⏳ progresif (by design, D6) | Halaman ID sudah lengkap, bukan blocker |

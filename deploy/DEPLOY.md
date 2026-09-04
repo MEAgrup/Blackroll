@@ -46,10 +46,11 @@ REST + Application Password route above is the one that works here as-is.)
 
 ## 4. Sebari lead form
 - Confirm the embed IDs in `blackroll-core/inc/sebari.php` (`971` / `5260` / `139954`).
+- ✅ **Open Dependency #7 resolved (2026-09):** Sebari team confirmed `redirect_url` is supported — Mode R ships as the default, no code change needed.
 - In the **Sebari dashboard**, set the form's redirect URLs:
   - Success → `https://blackrollblinds.com/kontak/terima-kasih/`
   - Failure → `https://blackrollblinds.com/kontak/gagal/`
-- If Sebari cannot redirect: set `define('BLACKROLL_SEBARI_SUBMIT_MODE','fetch');` in `wp-config.php` (Mode F: inline success, needs the CSP `connect-src` which is added automatically for fetch mode).
+- (Contingency only, not expected to be needed) If Sebari's redirect stops working: set `define('BLACKROLL_SEBARI_SUBMIT_MODE','fetch');` in `wp-config.php` (Mode F: inline success, needs the CSP `connect-src` which is added automatically for fetch mode).
 - Test an end-to-end submit into the WhatsApp automation.
 
 ## 5. SEO (Rank Math)
@@ -82,7 +83,7 @@ REST + Application Password route above is the one that works here as-is.)
 - **Incident:** where backups live + restore steps documented here; who to contact.
 
 ## Open dependencies still to close
-- #7 Sebari `redirect_url` support (drives step 4 choice).
-- Official logo vector (currently a reconstructed placeholder mark).
-- Kebijakan Privasi — copy is written; needs client/legal sign-off before go-live.
-- EN translations (progressive, D6).
+- ✅ ~~#7 Sebari `redirect_url` support~~ — **resolved 2026-09**, confirmed supported.
+- Official logo vector (currently a reconstructed placeholder mark) — pending from the client/rollerblind team.
+- ✅ ~~Kebijakan Privasi sign-off~~ — **legal sign-off done 2026-09**; final copy still to be uploaded and swapped into `inc/seed-content.php` (current draft is a placeholder pending that upload).
+- EN translations (progressive, D6) — ongoing, not a launch blocker.

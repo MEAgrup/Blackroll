@@ -17,7 +17,7 @@ Built to `Blackroll_MASTER_PRD.md` (11 locked modules) as amended by **Amendment
 | D5 | Heading font | **Anton** (weight 400 only, all-caps) + body **Inter** | `themes/blackroll/theme.json` |
 | D6 | EN content | **Progressive** (ID first, "Coming soon" EN) | Polylang; EN skeletons created as translated |
 
-> ⚠️ **Open Dependency #7 (before Contact ships):** confirm Sebari supports a success-redirect param (`redirect_url` or equivalent). If not → set `BLACKROLL_SEBARI_SUBMIT_MODE = fetch` (Mode F) and flip CSP to enforce with `connect-src https://sebari.co.id` (already wired in `inc/security.php`).
+> ✅ **Open Dependency #7 — RESOLVED (2026-09):** Sebari team confirmed `redirect_url` is supported. Mode R (redirect) ships as the default and needs no change. Mode F stays in the codebase as a dormant contingency only.
 
 ---
 
@@ -123,7 +123,7 @@ terms or founding dates are asserted anywhere — those need client confirmation
 | Product/portfolio photos | ✅ **real photos** (WebP, `seed-assets/`) | `plugins/blackroll-core/seed-assets/` | more via Drive folder as needed |
 | Article bodies | ✅ **written** (4 published articles, ID) | `inc/seed-content.php` | — |
 | Tentang Kami copy | ✅ **written** (ID) | `inc/seed-content.php` | — |
-| Kebijakan Privasi copy | ✅ **drafted** (ID) — needs client/legal sign-off | `inc/seed-content.php` | MEA/legal review |
+| Kebijakan Privasi copy | ✅ **legal sign-off done** (2026-09) — final copy pending upload from client | `inc/seed-content.php` (current draft) | Swap in final signed-off copy when uploaded |
 | Logo + favicon | placeholder reconstruction | `assets/images/favicon.svg`, `logo-mark.svg` | Official brand SVG/PNG |
 | EN translations | placeholder | Polylang | Progressive per D6 |
 | Domain | default | `BLACKROLL_SITE_URL` (`https://blackrollblinds.com`) | Final production domain |
