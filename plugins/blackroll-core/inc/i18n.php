@@ -15,6 +15,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Is the current request the English (secondary) language?
+ *
+ * ID is primary (D6). Only treat a request as EN when Polylang actually has
+ * an Indonesian language configured alongside it — an install where Polylang
+ * holds just one language (as seen on production: everything tagged en-US)
+ * must still render the ID labels and /kontak/, otherwise every CTA points
+ * at a /en/contact/ page that does not exist (404).
+ *
+ * @return bool
+ */
+if ( ! function_exists( 'blackroll_is_en' ) ) {
+	function blackroll_is_en() {
+		if ( ! function_exists( 'pll_current_language' ) || 'en' !== pll_current_language() ) {
+			return false;
+		}
+		$langs = function_exists( 'pll_languages_list' ) ? (array) pll_languages_list() : array();
+		return in_array( 'id', $langs, true );
+	}
+}
+
 add_shortcode(
 	'blackroll_language_switcher',
 	function () {

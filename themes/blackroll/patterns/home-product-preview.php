@@ -8,8 +8,8 @@
  * @package Blackroll
  */
 ?>
-<!-- wp:group {"tagName":"section","className":"blackroll-dark","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"backgroundColor":"charcoal","textColor":"white","layout":{"type":"constrained"}} -->
-<section class="wp-block-group blackroll-dark has-white-color has-charcoal-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
+<!-- wp:group {"align":"full","tagName":"section","className":"blackroll-dark","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"}}},"backgroundColor":"charcoal","textColor":"white","layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull blackroll-dark has-white-color has-charcoal-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60)">
 	<!-- wp:heading {"textAlign":"center","fontSize":"xx-large"} -->
 	<h2 class="wp-block-heading has-text-align-center has-xx-large-font-size"><?php esc_html_e( 'Pilih Sistem Penggerak', 'blackroll' ); ?></h2>
 	<!-- /wp:heading -->

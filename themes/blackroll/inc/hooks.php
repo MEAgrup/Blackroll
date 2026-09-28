@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 add_action(
 	'wp_body_open',
 	function () {
-		$label = ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language() )
+		$label = ( function_exists( 'blackroll_is_en' ) && blackroll_is_en() )
 			? 'Skip to content'
 			: 'Lewati ke konten';
 		printf(

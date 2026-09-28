@@ -19,6 +19,8 @@ Deploy is intentionally the **last** step. This is the cutover + ops reference.
 - Settings → Permalinks: **/%postname%/**.
 - Settings → Reading: Front page = **Beranda**, Posts page = **Artikel**.
 - Discussion: comments **off** (already enforced by blackroll-core).
+- **Polylang: Indonesian must exist and be the default language.** Found on production 2026-09-28: Polylang had only English configured, so every page rendered `<html lang="en-US">` and the floating CTA / Sebari redirect pointed at `/en/contact/…` (404). Since the Fase 0 fix the theme falls back to the ID URLs when Polylang has no `id` language, but the site still announces itself as English to Google until this is fixed: Languages → add **Bahasa Indonesia (id)**, make it default, then "Set all content without language to Indonesian" (and re-assign pages currently tagged EN).
+- The header/footer are theme files. If someone customised them in the Site Editor, WordPress keeps serving the DB copy and ignores theme updates: Appearance → Editor → Patterns → Template Parts → Header/Footer → "Reset" after deploying.
 - Create the pages/content: run `wp blackroll seed` then `wp blackroll content` (WP-CLI). The first builds the structure (pages, 24 SKUs, projects, articles, media sideload); the second writes the real Bahasa Indonesia copy for Tentang Kami, Kebijakan Privasi and the four articles. See the README content guide for the edit-ownership rules.
 
 ## 3. Content ops (MCP optional — letting Claude Code enter content directly)
@@ -84,6 +86,8 @@ REST + Application Password route above is the one that works here as-is.)
 
 ## Open dependencies still to close
 - ✅ ~~#7 Sebari `redirect_url` support~~ — **resolved 2026-09**, confirmed supported.
-- Official logo vector (currently a reconstructed placeholder mark) — pending from the client/rollerblind team.
+- Official logo — ✅ **traced from the Company Profile PDF (2026-09-28)** into `assets/images/logo-horizontal.svg` / `logo-stacked.svg` / `favicon.svg`. Swap in the designer's master vector if the client has one; the traced version is accurate at web sizes.
+- **SKU mapping for the Sept 2026 photo shoot** — the client's 19 zip folders are named `blind 2…19`; only `A004` and `S004` are identifiable. Once the client maps the rest, add them to `blackroll_shade_photo_keys()` (`plugins/blackroll-core/inc/selector.php`) and every mapped shade gets its swatch + preview photo. See `themes/blackroll/assets/images/collection/README.md`.
+- Motor / remote photos for the Motorized page — not in the Sept 2026 shoot.
 - ✅ ~~Kebijakan Privasi sign-off~~ — **legal sign-off done 2026-09**; final copy still to be uploaded and swapped into `inc/seed-content.php` (current draft is a placeholder pending that upload).
 - EN translations (progressive, D6) — ongoing, not a launch blocker.

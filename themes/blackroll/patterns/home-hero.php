@@ -12,8 +12,8 @@
  */
 $blackroll_hero_video = function_exists( 'blackroll_hero_video_url' ) ? blackroll_hero_video_url() : '';
 ?>
-<!-- wp:group {"tagName":"section","className":"blackroll-hero blackroll-dark","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"backgroundColor":"black","textColor":"white","layout":{"type":"constrained"}} -->
-<section class="wp-block-group blackroll-hero blackroll-dark has-white-color has-black-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
+<!-- wp:group {"align":"full","tagName":"section","className":"blackroll-hero blackroll-dark","style":{"spacing":{"padding":{"top":"var:preset|spacing|70","bottom":"var:preset|spacing|70"}}},"backgroundColor":"black","textColor":"white","layout":{"type":"constrained"}} -->
+<section class="wp-block-group alignfull blackroll-hero blackroll-dark has-white-color has-black-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--70);padding-bottom:var(--wp--preset--spacing--70)">
 	<!-- wp:heading {"level":1,"fontSize":"display"} -->
 	<h1 class="wp-block-heading has-display-font-size"><?php esc_html_e( 'Blinds Premium Terjangkau untuk Hunian Modern', 'blackroll' ); ?></h1>
 	<!-- /wp:heading -->

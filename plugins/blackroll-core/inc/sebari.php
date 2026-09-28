@@ -49,8 +49,7 @@ function blackroll_sebari_config() {
  * @return string
  */
 function blackroll_thankyou_url() {
-	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'id';
-	$path = ( 'en' === $lang ) ? '/en/contact/thank-you/' : '/kontak/terima-kasih/';
+	$path = blackroll_is_en() ? '/en/contact/thank-you/' : '/kontak/terima-kasih/';
 	return home_url( $path );
 }
 

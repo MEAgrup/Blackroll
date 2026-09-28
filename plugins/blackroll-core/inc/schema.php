@@ -86,7 +86,7 @@ add_shortcode(
 		}
 
 		$items = array();
-		$home  = ( function_exists( 'pll_current_language' ) && 'en' === pll_current_language() ) ? 'Home' : 'Beranda';
+		$home  = blackroll_is_en() ? 'Home' : 'Beranda';
 		$items[] = array( 'name' => $home, 'url' => home_url( '/' ) );
 
 		$obj = get_queried_object();

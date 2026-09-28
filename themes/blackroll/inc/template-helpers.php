@@ -13,14 +13,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/*
+ * blackroll_is_en() lives in blackroll-core (inc/i18n.php). This copy only
+ * keeps the theme rendering if the plugin is inactive.
+ */
+if ( ! function_exists( 'blackroll_is_en' ) ) {
+	function blackroll_is_en() {
+		if ( ! function_exists( 'pll_current_language' ) || 'en' !== pll_current_language() ) {
+			return false;
+		}
+		$langs = function_exists( 'pll_languages_list' ) ? (array) pll_languages_list() : array();
+		return in_array( 'id', $langs, true );
+	}
+}
+
 /**
  * Language-aware Contact page URL.
  *
  * @return string
  */
 function blackroll_contact_url() {
-	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'id';
-	$path = ( 'en' === $lang ) ? '/en/contact/' : '/kontak/';
+	$path = blackroll_is_en() ? '/en/contact/' : '/kontak/';
 	return esc_url( home_url( $path ) );
 }
 
@@ -30,8 +43,7 @@ function blackroll_contact_url() {
  * @return string
  */
 function blackroll_cta_label() {
-	$lang = function_exists( 'pll_current_language' ) ? pll_current_language() : 'id';
-	return ( 'en' === $lang ) ? 'Contact Us' : 'Hubungi Kami';
+	return blackroll_is_en() ? 'Contact Us' : 'Hubungi Kami';
 }
 
 /**
@@ -87,3 +99,54 @@ add_shortcode(
 		return ob_get_clean();
 	}
 );
+
+/**
+ * <img> for a curated collection photo shipped with the theme
+ * (assets/images/collection/, see the README there). Width/height are read
+ * from the file so the browser reserves space (no layout shift).
+ *
+ * @param string $file    File name inside assets/images/collection/.
+ * @param string $alt     Alt text.
+ * @param string $loading 'lazy' (default) or 'eager'.
+ * @return string HTML, or '' when the file is missing.
+ */
+function blackroll_collection_img( $file, $alt, $loading = 'lazy' ) {
+	$path = get_theme_file_path( 'assets/images/collection/' . $file );
+	if ( ! is_readable( $path ) ) {
+		return '';
+	}
+	$size = wp_getimagesize( $path );
+	return sprintf(
+		'<img src="%1$s" alt="%2$s" width="%3$d" height="%4$d" loading="%5$s" decoding="async">',
+		esc_url( get_theme_file_uri( 'assets/images/collection/' . $file ) ),
+		esc_attr( $alt ),
+		$size ? (int) $size[0] : 1600,
+		$size ? (int) $size[1] : 1600,
+		esc_attr( $loading )
+	);
+}
+
+/**
+ * Product photo gallery: one large lead image + a row of detail shots.
+ *
+ * @param array<int,array{0:string,1:string}> $items [ file, alt ] pairs; the first is the lead image.
+ * @return string HTML.
+ */
+function blackroll_product_gallery( $items ) {
+	$out      = '';
+	$portrait = false;
+	foreach ( array_values( $items ) as $i => $item ) {
+		$img = blackroll_collection_img( $item[0], $item[1] );
+		if ( ! $img ) {
+			continue;
+		}
+		if ( 0 === $i ) {
+			$size     = wp_getimagesize( get_theme_file_path( 'assets/images/collection/' . $item[0] ) );
+			$portrait = $size && $size[1] > $size[0];
+		}
+		$out .= '<figure class="blackroll-gallery__item' . ( 0 === $i ? ' blackroll-gallery__item--lead' : '' ) . '">' . $img . '</figure>';
+	}
+	// A portrait lead image sits in a tall left column beside the details
+	// instead of being cropped to a wide banner.
+	return $out ? '<div class="blackroll-gallery' . ( $portrait ? ' blackroll-gallery--portrait' : '' ) . '">' . $out . '</div>' : '';
+}

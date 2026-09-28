@@ -62,6 +62,44 @@ video {
 	justify-content: center;
 }
 
+/*
+ * Links inside dark sections. theme.json sets the global link colour to
+ * black, which made in-text links on black/charcoal sections invisible
+ * (e.g. "Lihat Detail · Hubungi Kami" on the homepage product preview).
+ * Buttons keep their own colours.
+ */
+:where(.blackroll-dark, .has-black-background-color, .has-charcoal-background-color)
+	a:where(:not(.wp-element-button):not(.blackroll-floating-cta)) {
+	color: var(--wp--preset--color--white);
+}
+
+/*
+ * Page sections sit flush. The root blockGap (40px) was showing as white
+ * bands between the header, the full-width dark sections and the footer;
+ * every section carries its own vertical padding instead.
+ */
+.wp-site-blocks > * + *,
+#blackroll-content > * {
+	margin-block-start: 0;
+}
+
+/* ---------- Logo (patterns/site-logo.php) ---------- */
+
+.blackroll-logo {
+	display: inline-flex;
+	align-items: center;
+	color: inherit;
+	line-height: 0;
+}
+.blackroll-logo svg {
+	display: block;
+	height: clamp(1.5rem, 3.2vw, 1.9rem);
+	width: auto;
+}
+.blackroll-footer .blackroll-logo svg {
+	height: 2.1rem;
+}
+
 /* ---------- Language switcher ---------- */
 
 .blackroll-lang-switcher {
@@ -112,6 +150,30 @@ video {
 	background: var(--wp--preset--color--charcoal);
 	transform: translateY(-2px);
 	color: var(--wp--preset--color--white);
+}
+
+/*
+ * Phones: the floating CTA covered body copy and footer links. Make it a
+ * full-width bar pinned to the bottom edge and reserve that height at the
+ * end of the page so nothing sits permanently underneath it.
+ */
+@media (max-width: 781px) {
+	.blackroll-floating-cta {
+		left: 0;
+		right: 0;
+		bottom: 0;
+		justify-content: center;
+		padding: 0.9rem 1rem calc(0.9rem + env(safe-area-inset-bottom, 0px));
+		box-shadow: 0 -4px 18px rgba(10, 10, 10, 0.18);
+		border-top: 1px solid var(--wp--preset--color--charcoal);
+	}
+	.blackroll-floating-cta:hover,
+	.blackroll-floating-cta:focus {
+		transform: none;
+	}
+	body {
+		padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+	}
 }
 
 /* ---------- Fallback contact block (Module 9) ---------- */
@@ -219,10 +281,56 @@ video {
 	object-fit: cover;
 	transition: opacity var(--wp--custom--transition--base, 180ms ease);
 }
+.blackroll-selector__preview img[hidden] {
+	display: none;
+}
+/*
+ * The label sat under a 100%-height image inside an overflow:hidden square,
+ * so it was never visible. Overlay it on the bottom edge instead.
+ */
 .blackroll-selector__label {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	padding: 0.75rem 1rem;
+	background: linear-gradient(0deg, rgba(10, 10, 10, 0.78), rgba(10, 10, 10, 0));
+	color: var(--wp--preset--color--white);
 	font-family: var(--wp--preset--font-family--heading);
 	text-transform: uppercase;
 	letter-spacing: 0.03em;
+}
+.blackroll-selector__label:empty {
+	display: none;
+}
+.blackroll-selector__empty {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 2rem;
+	text-align: center;
+	color: var(--wp--preset--color--white);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.5;
+}
+.blackroll-selector__empty[hidden] {
+	display: none;
+}
+
+/* Shades without a swatch photo yet: show the SKU instead of a blank tile. */
+.blackroll-swatch--code {
+	width: auto;
+	min-width: 44px;
+	padding: 0 0.6rem;
+	background: var(--wp--preset--color--white);
+	color: var(--wp--preset--color--black);
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
 }
 
 /* ---------- Portfolio grid + filter (Module 7) ---------- */
@@ -438,4 +546,42 @@ video {
 	.blackroll-floating-cta {
 		transition: none;
 	}
+}
+
+/* ---------- Product photo gallery (blackroll_product_gallery) ---------- */
+
+.blackroll-gallery {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.5rem;
+	margin-block: var(--wp--preset--spacing--40, 2rem);
+}
+.blackroll-gallery__item {
+	margin: 0;
+	overflow: hidden;
+	background: var(--wp--preset--color--hairline);
+	aspect-ratio: 1 / 1;
+}
+.blackroll-gallery__item--lead {
+	grid-column: 1 / -1;
+	aspect-ratio: 16 / 10;
+}
+.blackroll-gallery--portrait .blackroll-gallery__item--lead {
+	aspect-ratio: 4 / 5;
+}
+@media (min-width: 600px) {
+	.blackroll-gallery--portrait {
+		grid-template-columns: 2fr 1fr;
+	}
+	.blackroll-gallery--portrait .blackroll-gallery__item--lead {
+		grid-column: 1;
+		grid-row: 1 / span 3;
+		aspect-ratio: auto;
+	}
+}
+.blackroll-gallery__item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
 }

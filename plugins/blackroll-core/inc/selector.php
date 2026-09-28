@@ -49,11 +49,44 @@ function blackroll_shade_image( $post_id, $meta, $size = 'blackroll-preview' ) {
 	if ( ! $att ) {
 		$att = get_post_thumbnail_id( $post_id );
 	}
-	if ( ! $att ) {
+	$src = $att ? wp_get_attachment_image_url( $att, $size ) : '';
+	if ( $src ) {
+		return $src;
+	}
+	return blackroll_shade_theme_image( get_post_meta( $post_id, 'sku_code', true ), 'swatch_image' === $meta ? 'swatch' : 'front' );
+}
+
+/**
+ * SKU → curated photo key in the theme (themes/blackroll/assets/images/collection/).
+ * Only SKUs confirmed from the client's folder names are listed; add the rest
+ * once the client maps the "blind N" folders to SKUs (see the README there).
+ *
+ * @return array<string,string>
+ */
+function blackroll_shade_photo_keys() {
+	return apply_filters(
+		'blackroll_shade_photo_keys',
+		array(
+			'A004' => 'a004',       // Folder "Roller blindes RBXL A004".
+			'S004' => 'zebra-s004', // Folder "XLS004".
+		)
+	);
+}
+
+/**
+ * Theme-shipped photo for a SKU, used when the shade has no Media Library image.
+ *
+ * @param string $sku  SKU code.
+ * @param string $kind 'swatch' or 'front'.
+ * @return string URL or ''.
+ */
+function blackroll_shade_theme_image( $sku, $kind ) {
+	$keys = blackroll_shade_photo_keys();
+	if ( ! $sku || empty( $keys[ $sku ] ) ) {
 		return '';
 	}
-	$src = wp_get_attachment_image_url( $att, $size );
-	return $src ? $src : '';
+	$rel = 'assets/images/collection/' . $keys[ $sku ] . '-' . $kind . '.webp';
+	return is_readable( get_theme_file_path( $rel ) ) ? get_theme_file_uri( $rel ) : '';
 }
 
 add_shortcode(
@@ -125,8 +158,9 @@ add_shortcode(
 							$pv_black = blackroll_shade_image( $sid, 'preview_blackout', 'blackroll-preview' );
 							$pv_solar = blackroll_shade_image( $sid, 'preview_solar', 'blackroll-preview' );
 							$style    = $swatch ? ' style="background-image:url(' . esc_url( $swatch ) . ')"' : '';
+							$classes  = 'blackroll-swatch' . ( $swatch ? '' : ' blackroll-swatch--code' );
 							?>
-							<button type="button" class="blackroll-swatch" data-select="shade"
+							<button type="button" class="<?php echo esc_attr( $classes ); ?>" data-select="shade" aria-pressed="false"
 								data-value="<?php echo esc_attr( $shade->post_title ); ?>"
 								data-series="<?php echo esc_attr( $series ); ?>"
 								data-materials="<?php echo esc_attr( $mtype ); ?>"
@@ -136,7 +170,12 @@ add_shortcode(
 								<?php if ( $pv_solar ) : ?>data-preview-solar_screen="<?php echo esc_url( $pv_solar ); ?>"<?php endif; ?>
 								aria-label="<?php echo esc_attr( $shade->post_title . ' ' . $sku ); ?>"
 								title="<?php echo esc_attr( $shade->post_title . ' · ' . $sku ); ?>"<?php echo $style; // phpcs:ignore ?>>
-								<span class="screen-reader-text"><?php echo esc_html( $shade->post_title ); ?></span>
+								<?php if ( $swatch ) : ?>
+									<span class="screen-reader-text"><?php echo esc_html( $shade->post_title ); ?></span>
+								<?php else : ?>
+									<?php // No swatch photo yet: show the SKU instead of a blank tile. ?>
+									<span class="blackroll-swatch__code"><?php echo esc_html( $sku ? $sku : $shade->post_title ); ?></span>
+								<?php endif; ?>
 							</button>
 						<?php endforeach; ?>
 					</div>
@@ -155,6 +194,7 @@ add_shortcode(
 			<div class="blackroll-selector__preview">
 				<?php // An empty src makes the browser re-request the page itself as an image; keep the element for the JS swap but leave it hidden until it has a real source. ?>
 				<img<?php echo $first_preview ? ' src="' . esc_url( $first_preview ) . '"' : ' hidden'; ?> alt="<?php esc_attr_e( 'Pratinjau roller blinds Blackroll', 'blackroll-core' ); ?>" width="900" height="900" loading="lazy" decoding="async">
+				<p class="blackroll-selector__empty"<?php echo $first_preview ? ' hidden' : ''; ?>><?php esc_html_e( 'Foto warna ini segera hadir — tanyakan contoh kainnya via WhatsApp.', 'blackroll-core' ); ?></p>
 				<p class="blackroll-selector__label" aria-live="polite"></p>
 			</div>
 

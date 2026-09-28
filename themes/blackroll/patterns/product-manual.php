@@ -15,6 +15,18 @@
 <p><?php esc_html_e( 'Manual Blinds Blackroll adalah roller blinds operasi rantai (chain) — solusi premium terjangkau untuk mengatur cahaya dan privasi. Diproduksi dengan teknologi terkini, tahan air & minyak, anti-bakteri, dan anti-jamur, dengan desain minimalis yang cocok untuk hunian modern, kantor, maupun apartemen.', 'blackroll' ); ?></p>
 <!-- /wp:paragraph -->
 
+<?php
+// Client shoot, Sept 2026 (assets/images/collection/README.md).
+echo "<!-- wp:html -->\n" . blackroll_product_gallery( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from esc_* helpers.
+	array(
+		array( 'hero-clean.webp', __( 'Roller blind Blackroll terpasang, sistem rantai', 'blackroll' ) ),
+		array( 'detail-bottom-bar.webp', __( 'Bottom bar aluminium hitam dengan logo Blackroll', 'blackroll' ) ),
+		array( 'detail-bracket.webp', __( 'Bracket dan tabung penggulung roller blind', 'blackroll' ) ),
+		array( 'detail-chain.webp', __( 'Mekanisme rantai manual roller blind', 'blackroll' ) ),
+	)
+) . "\n<!-- /wp:html -->\n";
+?>
+
 <?php /* Premium 3D showcase (client decision 2026-09) — real model/texture pending from the rollerblind team (feedback #5); mount3D() ships a generic monochrome placeholder scene. Gated by assets/js/product-3d.js: falls back to the text below on prefers-reduced-motion, no WebGL, or a slow/metered connection. */ ?>
 <!-- wp:html -->
 <div class="blackroll-3d-slot" data-blackroll-3d>

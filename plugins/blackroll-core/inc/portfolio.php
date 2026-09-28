@@ -80,7 +80,8 @@ add_shortcode(
 
 		<div class="blackroll-lightbox" aria-modal="true" role="dialog" aria-label="<?php esc_attr_e( 'Pratinjau foto', 'blackroll-core' ); ?>">
 			<button type="button" class="blackroll-lightbox__close" aria-label="<?php esc_attr_e( 'Tutup', 'blackroll-core' ); ?>">&times;</button>
-			<img class="blackroll-lightbox__img" src="" alt="">
+			<?php // No src until a photo is opened: src="" makes the browser fetch the page itself as an image. ?>
+			<img class="blackroll-lightbox__img" alt="">
 		</div>
 		<?php
 		return ob_get_clean();

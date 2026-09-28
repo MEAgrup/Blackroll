@@ -124,7 +124,8 @@ terms or founding dates are asserted anywhere — those need client confirmation
 | Article bodies | ✅ **written** (4 published articles, ID) | `inc/seed-content.php` | — |
 | Tentang Kami copy | ✅ **written** (ID) | `inc/seed-content.php` | — |
 | Kebijakan Privasi copy | ✅ **legal sign-off done** (2026-09) — final copy pending upload from client | `inc/seed-content.php` (current draft) | Swap in final signed-off copy when uploaded |
-| Logo + favicon | placeholder reconstruction | `assets/images/favicon.svg`, `logo-mark.svg` | Official brand SVG/PNG |
+| Logo + favicon | ✅ **traced from the client's Company Profile PDF** | `assets/images/logo-horizontal.svg`, `logo-stacked.svg`, `favicon.svg`, `logo-mark.svg` | Designer's master vector, if one exists |
+| Collection photos (Sept 2026 shoot) | ✅ **80 curated WebP** — text-free crops, white-balanced | `assets/images/collection/` (see its README) | SKU mapping for the `blind N` folders |
 | EN translations | placeholder | Polylang | Progressive per D6 |
 | Domain | default | `BLACKROLL_SITE_URL` (`https://blackrollblinds.com`) | Final production domain |
 
