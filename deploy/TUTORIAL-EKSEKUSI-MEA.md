@@ -20,50 +20,15 @@ D1–D6) — **tidak ada lagi keputusan produk yang mengambang**. Yang berubah b
 |---|---|
 | Konfirmasi Sebari `redirect_url` (Open Dependency #7) | ✅ **Selesai** — Sebari konfirmasi didukung. Mode R (redirect) jalan sesuai default kode, tidak perlu ubah apa pun. |
 | Kebijakan Privasi — sign-off legal | ✅ **Selesai.** Naskah final **belum di-upload** — draft yang ada di `plugins/blackroll-core/inc/seed-content.php` masih dipakai sampai file final masuk. |
-| Fix duplicate-content (shade/taxonomy URL publik yang tidak sengaja) | ✅ Selesai di kode, branch `claude/blackroll-blinds-revisi-ij6kuj` |
-| Motion premium (video hero, Three.js, Lottie) | ✅ Selesai di kode, branch yang sama |
-| Search page noindex | ✅ Selesai di kode, branch yang sama |
-| Logo & favicon resmi | ⏳ **Belum** — masih rekonstruksi placeholder, menunggu Tim Rollerblind |
+| Fix duplicate-content (shade/taxonomy URL publik yang tidak sengaja) | ✅ Selesai di kode (`main`) |
+| Motion premium (video hero, Three.js, Lottie) | ✅ Selesai di kode (`main`) |
+| Search page noindex | ✅ Selesai di kode (`main`) |
+| Fase 0: bug situs live (CTA 404, layout sempit, selector, mobile) + foto koleksi Sept 2026 | ✅ Selesai di kode (`main`) — lihat `docs/PLAN-REVISI-PREMIUM.md` |
+| Logo & favicon resmi | ✅ **Selesai** — di-trace dari Company Profile PDF klien |
 | Terjemahan EN | ⏳ Progresif by design (D6) — bukan blocker |
 
-**Kode yang akan di-deploy ada di branch `claude/blackroll-blinds-revisi-ij6kuj`** di
-`github.com/MEAgrup/Blackroll` — **bukan** `main` (masih kosong) dan **bukan**
-`claude/blackroll-website-content-1t2er9` (versi sebelum 3 perbaikan di atas).
-
----
-
-## 1. Siapa mengerjakan apa (cek akses SEBELUM mulai)
-
-Tugas ini butuh beberapa jenis akses berbeda — bagi ke orang/role yang sudah pegang masing-masing,
-supaya tidak berhenti di tengah jalan karena nunggu kredensial:
-
-| Akses | Dibutuhkan untuk | Kalau belum ada |
-|---|---|---|
-| SSH Hostinger + WP-CLI | Deploy kode, jalankan seed/rewrite/config | Hostinger hPanel → Advanced → SSH Access |
-| wp-admin (role Administrator, sementara) | Setup awal plugin, Settings, Rank Math wizard | Akun admin existing |
-| Dashboard Sebari | Set redirect URL sukses/gagal pada form `971` | Yohan/tim yang pegang akun Sebari |
-| Google Search Console | Resubmit sitemap, cek coverage setelah go-live | Verifikasi domain sudah ada / minta akses |
-| GitHub `MEAgrup/Blackroll` | Pull kode (read-only cukup) | — |
-
-**Tidak perlu** kredensial WordPress.com/Jetpack — situs ini self-hosted biasa di Hostinger.
-
----
-
-## 2. Backup dulu (wajib, situs ini live)
-
-Sebelum menyentuh apa pun di server produksi:
-
-```bash
-# Hostinger: hPanel → Backups → buat backup manual, ATAU via WP-CLI kalau plugin backup terpasang
-wp db export ~/backup-sebelum-revisi-$(date +%Y%m%d).sql
-```
-
-Kalau ada environment **staging** di Hostinger, jalankan seluruh Langkah 3–7 di staging dulu,
-verifikasi penuh (Bagian 8), baru ulangi di produksi.
-
----
-
-## 3. Tarik & pasang kode (branch yang benar!)
+**Kode yang akan di-deploy ada di branch `main`** di `github.com/MEAgrup/Blackroll`
+(berisi semua revisi di atas, termasuk Fase 0). Branch `claude/*` lama hanya arsip.
 
 Ikuti **`deploy/HOSTINGER-SSH.md` Bagian 0–2**, dengan satu koreksi penting: dokumen itu sudah
 diperbaiki di revisi ini supaya menunjuk ke branch yang benar. Ringkasnya:
@@ -71,8 +36,8 @@ diperbaiki di revisi ini supaya menunjuk ke branch yang benar. Ringkasnya:
 ```bash
 cd ~/src/blackroll   # kalau belum pernah clone, lihat HOSTINGER-SSH.md Bagian 1
 git fetch origin
-git checkout claude/blackroll-blinds-revisi-ij6kuj
-git pull origin claude/blackroll-blinds-revisi-ij6kuj
+git checkout main
+git pull origin main
 
 rsync -a --delete ~/src/blackroll/themes/blackroll/       "$WPROOT/wp-content/themes/blackroll/"
 rsync -a --delete ~/src/blackroll/plugins/blackroll-core/ "$WPROOT/wp-content/plugins/blackroll-core/"

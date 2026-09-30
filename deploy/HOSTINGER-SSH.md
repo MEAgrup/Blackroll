@@ -48,13 +48,13 @@ tidak pernah bisa diakses publik:
 mkdir -p ~/src && cd ~/src
 git clone https://github.com/MEAgrup/Blackroll.git blackroll
 cd blackroll
-git checkout claude/blackroll-blinds-revisi-ij6kuj
+git checkout main
 ```
 
 Pembaruan berikutnya cukup:
 
 ```bash
-cd ~/src/blackroll && git pull origin claude/blackroll-blinds-revisi-ij6kuj
+cd ~/src/blackroll && git pull origin main
 ```
 
 ---
