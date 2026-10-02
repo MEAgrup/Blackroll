@@ -86,7 +86,7 @@ REST + Application Password route above is the one that works here as-is.)
 
 ## Open dependencies still to close
 - ✅ ~~#7 Sebari `redirect_url` support~~ — **resolved 2026-09**, confirmed supported.
-- Official logo — ✅ **traced from the Company Profile PDF (2026-09-28)** into `assets/images/logo-horizontal.svg` / `logo-stacked.svg` / `favicon.svg`. Swap in the designer's master vector if the client has one; the traced version is accurate at web sizes.
+- Official logo — ✅ **traced from the client's official white PNG (2026-10-01)** into `logo-horizontal.svg` / `logo-stacked.svg` / `logo-full.svg` / `favicon.svg`. The client confirmed no SVG master exists; the PNG is kept in `themes/blackroll/assets/images/brand/`.
 - **SKU mapping for the Sept 2026 photo shoot** — the client's 19 zip folders are named `blind 2…19`; only `A004` and `S004` are identifiable. Once the client maps the rest, add them to `blackroll_shade_photo_keys()` (`plugins/blackroll-core/inc/selector.php`) and every mapped shade gets its swatch + preview photo. See `themes/blackroll/assets/images/collection/README.md`.
 - Motor / remote photos for the Motorized page — not in the Sept 2026 shoot.
 - ✅ ~~Kebijakan Privasi sign-off~~ — **legal sign-off done 2026-09**; final copy still to be uploaded and swapped into `inc/seed-content.php` (current draft is a placeholder pending that upload).

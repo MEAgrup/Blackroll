@@ -10,9 +10,9 @@ kali satu fase selesai.
 | Fase | Isi | Status |
 |---|---|---|
 | 0 | Perbaikan bug situs live, logo resmi, kurasi foto | ✅ Selesai ([PR #2](https://github.com/MEAgrup/Blackroll/pull/2)) |
-| 1 | Visual premium: layout, tipografi, motion | ⏳ Sebagian bisa jalan; font menunggu klien |
+| 1 | Visual premium: layout, tipografi, motion | ⏳ Siap dikerjakan (desain diserahkan ke MEA) |
 | 2 | Hero homepage Three.js "The Blind Reveal" | ⏳ Bisa jalan tanpa klien |
-| 3 | Koleksi (Roller & Zebra) + susunan homepage baru | ⏳ Butuh pemetaan SKU dari klien |
+| 3 | Koleksi (Roller utama, Zebra pelengkap) + susunan homepage baru | ⏳ Bisa jalan; foto per SKU menyusul pemetaan |
 | 4 | QA + deploy ke Hostinger | ⏳ |
 
 ---
@@ -51,8 +51,9 @@ tindakan di wp-admin (lihat `deploy/DEPLOY.md` §2).
 ## Fase 0: Perbaikan dasar ✅
 
 - Perbaikan bug 2–9 di atas.
-- Logo resmi di-trace dari Company Profile PDF (`logo-horizontal.svg`,
-  `logo-stacked.svg`, `favicon.svg`).
+- Logo resmi: awalnya di-trace dari Company Profile PDF, lalu diganti dengan trace
+  dari PNG resmi klien (`logo-horizontal.svg`, `logo-stacked.svg`, `logo-full.svg`
+  dengan tagline, `favicon.svg`).
 - Kurasi foto: foto depan, foto tergulung, detail, swatch, dan tekstur kain per warna.
 - Galeri foto di halaman Manual dan Motorized; baris "ruangan" di homepage
   memakai foto produk asli.
@@ -65,9 +66,8 @@ tindakan di wp-admin (lihat `deploy/DEPLOY.md` §2).
   untuk latar section dan satu aksen metalik tipis.
 - **Motion:** smooth scroll, teks/foto muncul bertahap saat di-scroll, efek hover
   pada kartu. Semua mati otomatis kalau pengunjung memilih `prefers-reduced-motion`.
-- **Tipografi (butuh keputusan klien):** serif elegan untuk judul besar
-  (mis. Fraunces/Cormorant), Anton untuk label kecil. Anton dikunci di
-  keputusan D5, jadi perubahan ini harus disetujui klien.
+- **Tipografi:** serif elegan untuk judul besar (mis. Fraunces/Cormorant),
+  Anton untuk label kecil. D5 (Anton) boleh diubah: klien menyerahkan desain ke MEA.
 
 ## Fase 2: Hero Three.js "The Blind Reveal"
 
@@ -116,18 +116,29 @@ tindakan di wp-admin (lihat `deploy/DEPLOY.md` §2).
 
 ---
 
-## Menunggu dari klien
+## Jawaban klien (Hendrik Limas, WhatsApp, 2026-10-01)
+
+| Pertanyaan | Jawaban | Dampak ke plan |
+|---|---|---|
+| Arah website | Bisnis Blackroll sekarang fokus **offline** (proyek residence & commercial). Website **untuk pengenalan produk**. "Bebas, atur aja, asal website jalan." | Website = katalog produk + bukti proyek + konsultasi WhatsApp. Tidak perlu fitur jualan online. Keputusan desain diserahkan ke tim MEA. |
+| Tulisan "Ordinary Furnishings" di foto | Tidak usah ada tulisannya. | ✅ Sudah: semua foto kurasi di-crop. |
+| Logo resmi SVG/PNG | Tidak ada SVG; klien kirim **PNG putih transparan** (dengan tagline "BLACK IS COOL"). | ✅ Sudah: SVG di-trace ulang dari PNG ini (`assets/images/brand/`). |
+| Zebra jadi lini utama? | **Roller blind yang utama.** | Homepage dan hero fokus Roller; Zebra tampil sebagai lini pelengkap. |
+| Foto suasana ruangan / video | Bebas. | Hero Three.js dibangun dari foto yang ada; tidak menunggu video. |
+
+Karena desain diserahkan ke MEA, **keputusan font (D5) diambil tim MEA di Fase 1**.
+
+## Masih menunggu dari klien (tidak memblokir)
 
 1. **Pemetaan folder `blind 2…19` ke kode SKU.** Tambahkan ke
    `blackroll_shade_photo_keys()` di `plugins/blackroll-core/inc/selector.php`.
-2. **Font judul:** tetap Anton atau ganti ke serif premium?
-3. **Produk Zebra:** jadi lini utama di samping Roller? **Outdoor:** kategori
-   sendiri atau material?
-4. **Foto motor/remote** untuk halaman Motorized, foto suasana ruangan, dan
-   video hero (opsional).
-5. **Angka klaim** (">100 proyek", "ready stock"): boleh ditampilkan?
-6. Instagram resmi: `@blackroll.blinds` (footer) atau `@blackroll.official`
+   Sampai ada, swatch tanpa foto tampil sebagai chip SKU.
+2. **Foto motor/remote** untuk halaman Motorized.
+3. **Angka klaim** (">100 proyek", "ready stock"): boleh ditampilkan?
+4. Instagram resmi: `@blackroll.blinds` (footer) atau `@blackroll.official`
    (dokumen landing page)?
+5. Daftar proyek residence/commercial (nama/kota/foto) untuk Portofolio —
+   paling relevan karena bisnis sekarang berbasis proyek.
 
 ## Perlu dikerjakan tim MEA di wp-admin production
 

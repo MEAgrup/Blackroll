@@ -96,8 +96,8 @@ video {
 	height: clamp(1.5rem, 3.2vw, 1.9rem);
 	width: auto;
 }
-.blackroll-footer .blackroll-logo svg {
-	height: 2.1rem;
+.blackroll-logo--full svg {
+	height: 7.5rem;
 }
 
 /* ---------- Language switcher ---------- */

@@ -150,3 +150,21 @@ function blackroll_product_gallery( $items ) {
 	// instead of being cropped to a wide banner.
 	return $out ? '<div class="blackroll-gallery' . ( $portrait ? ' blackroll-gallery--portrait' : '' ) . '">' . $out . '</div>' : '';
 }
+
+/**
+ * Official Blackroll logo as inline SVG (inherits the text colour), linked to
+ * the homepage. Traced from the client's logo file (assets/images/brand/).
+ *
+ * @param string $variant 'horizontal' (header) or 'full' (stacked + "Black is Cool", footer).
+ * @return string HTML.
+ */
+function blackroll_logo( $variant = 'horizontal' ) {
+	$file = 'full' === $variant ? 'logo-full.svg' : 'logo-horizontal.svg';
+	$svg  = file_get_contents( get_theme_file_path( 'assets/images/' . $file ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local theme file.
+	return sprintf(
+		'<a class="blackroll-logo blackroll-logo--%1$s" href="%2$s" rel="home">%3$s</a>',
+		esc_attr( $variant ),
+		esc_url( home_url( '/' ) ),
+		$svg
+	);
+}
