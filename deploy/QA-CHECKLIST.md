@@ -15,6 +15,8 @@ Run `npm run start && npm run seed`, then `npm run qa` (Lighthouse CI) and this 
 - [ ] CLS < 0.1 (all images have width/height or aspect-ratio; Sebari form container fixed-height; hero video/canvas has a reserved aspect-ratio box so it doesn't shift layout on load).
 - [ ] INP < 200ms. Lighthouse mobile perf ≥ 90 on non-motion pages (homepage/Product are exempt per the accepted trade-off above).
 - [ ] `npm run build:analyze` — three.js still isolated to the Product bundle only (the gate is about *leaking into other pages*, not about using three.js at all — that stays enforced).
+- [ ] **Hero 3D (Fase 2):** on a normal desktop the homepage hero shows the 3D blind (drops on load, rolls up on scroll; colour chips re-texture it; Roller/Zebra toggle works). With `prefers-reduced-motion`, no WebGL or Save-Data the product photo shows instead and the chips swap the photo. Product pages: 3D slot + "Geser untuk menggulung blind" slider; Motorized shows no chain.
+- [ ] `assets/js/dist/` on the server is the committed build (no Node needed on Hostinger). After any change to `assets/js/*.js`: `npm run build:analyze`, commit `dist/`.
 - [ ] Hero video/Lottie: `prefers-reduced-motion` shows the static poster/fallback image (no autoplay); slow/2G-3G connections (`canRun3D()`, `navigator.connection`) get the static fallback too — these are accessibility/UX safety nets, not performance vanity, and are NOT part of the accepted trade-off.
 - [ ] All images WebP, `srcset`, lazy below the fold, self-hosted WOFF2 fonts, no render-blocking JS (applies outside the hero motion elements above).
 

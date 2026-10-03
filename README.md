@@ -66,7 +66,7 @@ npm run stop           # stop containers
 
 After `npm run start` the theme + plugin are auto-activated, permalinks set to `/%postname%/`, timezone `Asia/Jakarta` (see `.wp-env.json` lifecycle script).
 
-The theme also runs un-bundled in dev — `assets/js/*.js` are enqueued directly, so `npm run build` is only needed for production minification and the analyzer gate.
+The vanilla scripts (selector, portfolio, contact) also run un-bundled in dev. The ES-module entries (motion, home-hero-3d, product-3d) only load from `assets/js/dist/`, which **is committed** (Hostinger has no Node build step): after changing anything in `assets/js/`, run `npm run build:analyze` and commit `dist/`.
 
 ---
 

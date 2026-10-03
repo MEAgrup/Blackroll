@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BLACKROLL_VERSION', '0.1.0' );
+define( 'BLACKROLL_VERSION', '0.2.0' );
 define( 'BLACKROLL_DIR', get_template_directory() );
 define( 'BLACKROLL_URI', get_template_directory_uri() );
 

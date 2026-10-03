@@ -3,7 +3,7 @@
  * Plugin Name:       Blackroll Core
  * Plugin URI:        https://blackrollblinds.com
  * Description:        Companion plugin for the Blackroll theme. Registers the shade/project content model, config flags (Sebari submit mode, analytics, primary WA), localized rewrites, schema, security headers and the Sebari lead-form helpers. Lives outside the theme so content and config survive theme swaps.
- * Version:           0.1.0
+ * Version:           0.2.0
  * Requires at least: 6.5
  * Requires PHP:      8.1
  * Author:            MEA Agency
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BLACKROLL_CORE_VERSION', '0.1.0' );
+define( 'BLACKROLL_CORE_VERSION', '0.2.0' );
 define( 'BLACKROLL_CORE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'BLACKROLL_CORE_URL', plugin_dir_url( __FILE__ ) );
 

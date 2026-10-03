@@ -2,8 +2,9 @@
 node_modules/
 vendor/
 
-# Build output
-themes/blackroll/assets/js/dist/
+# Build output — assets/js/dist/ IS committed on purpose: Hostinger has no
+# Node build step, so a `git pull` must already carry the built JS. Rebuild
+# (`npm run build`) and commit dist/ whenever assets/js/*.js changes.
 themes/blackroll/assets/css/dist/
 *.map
 

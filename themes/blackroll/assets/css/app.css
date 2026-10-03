@@ -44,7 +44,8 @@ video {
 	background: var(--wp--preset--color--black);
 	color: var(--wp--preset--color--white);
 	text-decoration: none;
-	font-family: var(--wp--preset--font-family--heading);
+	font-family: var(--wp--preset--font-family--body);
+	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
 }
@@ -109,7 +110,8 @@ video {
 	margin: 0;
 	padding: 0;
 	text-transform: uppercase;
-	font-family: var(--wp--preset--font-family--heading);
+	font-family: var(--wp--preset--font-family--body);
+	font-weight: 600;
 	font-size: var(--wp--preset--font-size--small);
 	letter-spacing: 0.06em;
 }
@@ -136,7 +138,8 @@ video {
 	padding: 0.85rem 1.5rem;
 	background: var(--wp--preset--color--black);
 	color: var(--wp--preset--color--white);
-	font-family: var(--wp--preset--font-family--heading);
+	font-family: var(--wp--preset--font-family--body);
+	font-weight: 600;
 	font-size: var(--wp--preset--font-size--small);
 	text-transform: uppercase;
 	letter-spacing: 0.06em;
@@ -183,7 +186,8 @@ video {
 	padding: var(--wp--preset--spacing--40, 1.5rem);
 }
 .blackroll-fallback-contact__lead {
-	font-family: var(--wp--preset--font-family--heading);
+	font-family: var(--wp--preset--font-family--body);
+	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
 	margin: 0 0 0.75rem;
@@ -217,7 +221,8 @@ video {
 	gap: var(--wp--preset--spacing--30, 1rem);
 }
 .blackroll-option-block__label {
-	font-family: var(--wp--preset--font-family--heading);
+	font-family: var(--wp--preset--font-family--body);
+	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.05em;
 	font-size: var(--wp--preset--font-size--small);
@@ -297,7 +302,8 @@ video {
 	padding: 0.75rem 1rem;
 	background: linear-gradient(0deg, rgba(10, 10, 10, 0.78), rgba(10, 10, 10, 0));
 	color: var(--wp--preset--color--white);
-	font-family: var(--wp--preset--font-family--heading);
+	font-family: var(--wp--preset--font-family--body);
+	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.03em;
 }
@@ -436,7 +442,8 @@ video {
 	margin: 0;
 }
 .blackroll-sebari-form label {
-	font-family: var(--wp--preset--font-family--heading);
+	font-family: var(--wp--preset--font-family--body);
+	font-weight: 600;
 	text-transform: uppercase;
 	letter-spacing: 0.04em;
 	font-size: var(--wp--preset--font-size--small);
@@ -480,58 +487,507 @@ video {
 	height: auto;
 }
 
-/* ---------- Premium hero video + Product 3D showcase ----------
- * Client decision (2026-09): premium look over loading-speed score on these
- * two spots — see deploy/QA-CHECKLIST.md. Both stay no-op/static until
- * assets/js/motion.js and product-3d.js actually mount (built bundle present
- * + capability gate passes), so there is no layout shift either way: the
- * poster/fallback fills the same box the video/canvas would take over. */
+/* ---------- Fase 1: premium type & shared components ----------
+ * Fraunces display headings (theme.json), tracked Inter labels, warm stone
+ * sections. Italic <em> inside headings is the accent device. */
+
+:where(h1, h2, h3) em {
+	font-style: italic;
+	font-weight: 300;
+}
+.blackroll-eyebrow {
+	margin: 0 0 1.1rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.22em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--grey-text);
+}
+.blackroll-dark .blackroll-eyebrow {
+	color: var(--wp--preset--color--grey);
+}
+.blackroll-section-head {
+	margin-bottom: clamp(2rem, 5vw, 3.5rem);
+	max-width: 46rem;
+}
+.blackroll-section-head h2 {
+	margin: 0;
+}
+.blackroll-section-head__lead {
+	margin-top: 1.25rem;
+	color: var(--wp--preset--color--grey-text);
+	max-width: 36rem;
+}
+.blackroll-link {
+	display: inline-flex;
+	gap: 0.6rem;
+	align-items: center;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	text-decoration: none;
+	border-bottom: 1px solid currentColor;
+	padding-bottom: 0.2rem;
+}
+.blackroll-link::after {
+	content: "→";
+	transition: transform var(--wp--custom--transition--base, 180ms ease);
+}
+a:hover .blackroll-link::after,
+.blackroll-link:hover::after {
+	transform: translateX(4px);
+}
+.blackroll-btn--light {
+	background: var(--wp--preset--color--white) !important;
+	color: var(--wp--preset--color--black) !important;
+}
+.blackroll-btn--light:hover,
+.blackroll-btn--light:focus {
+	background: var(--wp--preset--color--stone) !important;
+}
+.blackroll-btn--ghost {
+	display: inline-flex;
+	align-items: center;
+	min-height: 44px;
+	padding: 1.05rem 2rem;
+	border: 1px solid rgba(255, 255, 255, 0.45);
+	color: var(--wp--preset--color--white);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	text-decoration: none;
+	transition: border-color var(--wp--custom--transition--base, 180ms ease);
+}
+.blackroll-btn--ghost:hover,
+.blackroll-btn--ghost:focus {
+	border-color: var(--wp--preset--color--white);
+}
+
+/* Generous vertical rhythm for the full-width homepage sections. */
+.blackroll-trust,
+.blackroll-collection,
+.blackroll-products,
+.blackroll-details {
+	padding-block: clamp(4rem, 10vw, 8rem);
+}
+.blackroll-trust {
+	padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+
+/* Scroll reveal — pure CSS (scroll-driven animations), no JS and no flash of
+   hidden content: browsers without support simply show everything. */
+@supports (animation-timeline: view()) {
+	.blackroll-reveal {
+		animation: blackroll-rise linear both;
+		animation-timeline: view();
+		animation-range: entry 0% entry 38%;
+	}
+}
+@keyframes blackroll-rise {
+	from {
+		opacity: 0;
+		transform: translateY(28px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* ---------- Fase 2: homepage hero — "The Blind Reveal" ---------- */
 
 .blackroll-hero {
 	position: relative;
 	overflow: hidden;
+	padding: clamp(2rem, 5vw, 4rem) var(--wp--style--root--padding-right, 1.5rem) clamp(3rem, 6vw, 5rem);
+	background:
+		radial-gradient(60% 70% at 72% 45%, rgba(255, 236, 205, 0.09), transparent 70%),
+		var(--wp--preset--color--black);
 }
-.blackroll-hero__media {
-	position: absolute;
-	inset: 0;
-	z-index: 0;
+.blackroll-hero__inner {
+	max-width: var(--wp--style--global--wide-size, 1320px);
+	margin: 0 auto;
+	display: grid;
+	gap: clamp(2rem, 4vw, 4rem);
+	align-items: center;
+}
+@media (min-width: 960px) {
+	.blackroll-hero {
+		min-height: calc(100svh - 70px);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.blackroll-hero__inner {
+		width: 100%;
+		grid-template-columns: 6fr 5fr;
+	}
+}
+.blackroll-hero__title {
+	margin: 0;
+	font-size: clamp(2.6rem, 4.6vw, 4.6rem);
+	line-height: 1.02;
+}
+.blackroll-hero__title em {
+	display: block;
+	color: #e9dcc6;
+}
+.blackroll-hero__lead {
+	margin: 1.75rem 0 0;
+	max-width: 32rem;
+	color: rgba(255, 255, 255, 0.72);
+	font-size: 1.0625rem;
+}
+.blackroll-hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.9rem;
+	margin-top: 2.25rem;
+}
+.blackroll-hero__showcase {
+	display: grid;
+	gap: 1.25rem;
+}
+.blackroll-hero__stage {
+	position: relative;
+	aspect-ratio: 4 / 5;
+	/* Cap the height at 62svh so the colour controls stay above the fold. */
+	width: min(100%, calc(62svh * 0.8));
+	margin-inline: auto;
 	overflow: hidden;
+	background: #111;
 }
-.blackroll-hero__video {
+.blackroll-hero__fallback {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	opacity: 0.5; /* keeps the H1/paragraph legible over motion, on top of the dark bg */
+	transition: opacity 400ms ease;
 }
-/* Lift the real content above the absolutely-positioned video layer. */
-.blackroll-hero > *:not(.blackroll-hero__media) {
-	position: relative;
-	z-index: 1;
+.blackroll-hero__stage.is-3d {
+	background: transparent;
 }
-
-.blackroll-3d-slot {
-	position: relative;
-	aspect-ratio: 1 / 1;
-	max-width: 480px;
-	margin: var(--wp--preset--spacing--40, 2rem) auto;
-	background: var(--wp--preset--color--charcoal);
-	display: grid;
-	place-items: center;
-	overflow: hidden;
+.blackroll-hero__stage.is-3d .blackroll-hero__fallback {
+	opacity: 0;
+	position: absolute;
+	inset: 0;
 }
+.blackroll-blind3d__canvas,
 .blackroll-3d-slot__canvas {
 	position: absolute;
 	inset: 0;
+	width: 100% !important;
+	height: 100% !important;
+	display: block;
+}
+.blackroll-hero__controls {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.9rem 1.25rem;
+}
+.blackroll-hero__modes {
+	display: inline-flex;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.blackroll-hero__modes button {
+	min-height: 40px;
+	padding: 0 1.1rem;
+	border: 0;
+	background: transparent;
+	color: rgba(255, 255, 255, 0.7);
+	font: 600 0.75rem/1 var(--wp--preset--font-family--body);
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+.blackroll-hero__modes button[aria-pressed="true"] {
+	background: var(--wp--preset--color--white);
+	color: var(--wp--preset--color--black);
+}
+.blackroll-hero__chips {
+	display: flex;
+	gap: 0.55rem;
+}
+.blackroll-hero__chip {
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	border: 2px solid rgba(255, 255, 255, 0.25);
+	background-size: 260%;
+	background-position: center;
+	cursor: pointer;
+	transition: transform var(--wp--custom--transition--base, 180ms ease), border-color 180ms ease;
+}
+.blackroll-hero__chip:hover {
+	transform: scale(1.08);
+}
+.blackroll-hero__chip[aria-pressed="true"] {
+	border-color: var(--wp--preset--color--white);
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.18);
+}
+.blackroll-hero__chip[hidden] {
+	display: none;
+}
+.blackroll-hero__label {
+	margin: 0;
+	min-width: 8rem;
+	font-family: var(--wp--preset--font-family--display);
+	font-style: italic;
+	font-size: 1.15rem;
+	color: rgba(255, 255, 255, 0.85);
+}
+.blackroll-hero__scroll {
+	display: none;
+}
+@media (min-width: 960px) {
+	.blackroll-hero__scroll {
+		display: block;
+		position: absolute;
+		left: 50%;
+		bottom: 1.5rem;
+		transform: translateX(-50%);
+		margin: 0;
+		font-size: 0.6875rem;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: rgba(255, 255, 255, 0.45);
+	}
+}
+
+/* ---------- Trust stats ---------- */
+
+.blackroll-stats {
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 2rem 1.5rem;
+}
+@media (min-width: 782px) {
+	.blackroll-stats {
+		grid-template-columns: repeat(4, 1fr);
+	}
+	.blackroll-stat + .blackroll-stat {
+		border-left: 1px solid var(--wp--preset--color--sand);
+		padding-left: 1.5rem;
+	}
+}
+.blackroll-stat__value {
+	display: block;
+	font-family: var(--wp--preset--font-family--display);
+	font-size: clamp(2.5rem, 5vw, 3.75rem);
+	font-weight: 340;
+	line-height: 1;
+}
+.blackroll-stat__label {
+	display: block;
+	margin-top: 0.6rem;
+	font-size: 0.875rem;
+	color: var(--wp--preset--color--grey-text);
+	max-width: 15rem;
+}
+
+/* ---------- Collection grid + Zebra card ---------- */
+
+.blackroll-collection__grid,
+.blackroll-details__grid {
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+	display: grid;
+	gap: clamp(0.75rem, 1.6vw, 1.25rem);
+	grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 782px) {
+	.blackroll-collection__grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+.blackroll-card a {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+}
+.blackroll-card__media,
+.blackroll-product__media,
+.blackroll-detail__media {
+	display: block;
+	overflow: hidden;
+	background: var(--wp--preset--color--stone);
+}
+.blackroll-card__media {
+	aspect-ratio: 4 / 5;
+}
+.blackroll-card__media img,
+.blackroll-product__media img,
+.blackroll-detail__media img {
+	display: block;
 	width: 100%;
 	height: 100%;
+	object-fit: cover;
+	transition: transform var(--wp--custom--transition--slow, 700ms ease);
+}
+.blackroll-card a:hover img,
+.blackroll-product:hover img {
+	transform: scale(1.04);
+}
+.blackroll-card__meta {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 1rem;
+	padding-top: 0.9rem;
+}
+.blackroll-card__title {
+	font-family: var(--wp--preset--font-family--display);
+	font-size: 1.35rem;
+}
+.blackroll-card__tag {
+	font-size: 0.6875rem;
+	font-weight: 600;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--grey-text);
+}
+.blackroll-zebra {
+	margin: clamp(3rem, 7vw, 5rem) auto 0;
+	display: grid;
+	gap: clamp(1.5rem, 4vw, 3.5rem);
+	align-items: center;
+	background: var(--wp--preset--color--stone);
+}
+@media (min-width: 782px) {
+	.blackroll-zebra {
+		grid-template-columns: 5fr 7fr;
+	}
+}
+.blackroll-zebra__media {
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+}
+.blackroll-zebra__media img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.blackroll-zebra__copy {
+	padding: 0 clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+}
+@media (min-width: 782px) {
+	.blackroll-zebra__copy {
+		padding-block: 2rem;
+	}
+}
+.blackroll-zebra__copy h3 {
+	margin: 0 0 1rem;
+}
+.blackroll-collection__more {
+	margin-top: clamp(2.5rem, 5vw, 3.5rem);
+	text-align: center;
+}
+
+/* ---------- Manual vs Motorized cards ---------- */
+
+.blackroll-products__grid {
+	display: grid;
+	gap: clamp(1rem, 2vw, 1.5rem);
+}
+@media (min-width: 782px) {
+	.blackroll-products__grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+.blackroll-product {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	align-content: start;
+	background: var(--wp--preset--color--white);
+	color: inherit;
+	text-decoration: none;
+}
+.blackroll-product__media {
+	aspect-ratio: 16 / 10;
+}
+.blackroll-product__body {
+	display: grid;
+	gap: 0.75rem;
+	padding: clamp(1.5rem, 3vw, 2.25rem);
+	justify-items: start;
+}
+.blackroll-product__title {
+	font-family: var(--wp--preset--font-family--display);
+	font-size: clamp(1.6rem, 3vw, 2.1rem);
+	line-height: 1.1;
+}
+.blackroll-product__text {
+	color: var(--wp--preset--color--grey-text);
+}
+
+/* ---------- Craft details (dark) ---------- */
+
+.blackroll-details__grid {
+	grid-template-columns: 1fr;
+}
+@media (min-width: 782px) {
+	.blackroll-details__grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+.blackroll-detail__media {
+	aspect-ratio: 4 / 5;
+	background: #161616;
+}
+.blackroll-detail__title {
+	margin: 1.25rem 0 0.4rem;
+	font-size: 1.4rem;
+}
+.blackroll-detail__text {
+	margin: 0;
+	color: rgba(255, 255, 255, 0.65);
+	font-size: 0.95rem;
+}
+
+/* ---------- Product-page 3D slot (blind-scene.js) ---------- */
+
+.blackroll-3d {
+	margin: var(--wp--preset--spacing--40, 2rem) auto;
+	max-width: 520px;
+}
+.blackroll-3d-slot {
+	position: relative;
+	aspect-ratio: 4 / 5;
+	overflow: hidden;
+	background: radial-gradient(70% 60% at 50% 40%, #2a2724, var(--wp--preset--color--black));
 }
 .blackroll-3d-slot__fallback {
-	/* On the dark --charcoal background, --grey-text (tuned for AA on white)
-	   would fail contrast — --grey is the one that passes AA on dark here. */
-	color: var(--wp--preset--color--grey);
-	text-align: center;
-	padding: 0 1.5rem;
-	font-size: var(--wp--preset--font-size--small);
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+.blackroll-3d-slot.is-3d .blackroll-3d-slot__fallback {
+	display: none;
+}
+.blackroll-3d__range {
+	display: grid;
+	gap: 0.5rem;
+	margin-top: 1rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--grey-text);
+}
+.blackroll-3d__range[hidden] {
+	display: none;
+}
+.blackroll-3d__range input {
+	width: 100%;
+	accent-color: var(--wp--preset--color--black);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -545,6 +1001,9 @@ video {
 	}
 	.blackroll-floating-cta {
 		transition: none;
+	}
+	.blackroll-reveal {
+		animation: none !important;
 	}
 }
 

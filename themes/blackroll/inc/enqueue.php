@@ -13,14 +13,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Preload the two critical WOFF2 files (Anton latin + Inter variable latin)
- * so the LCP heading text does not wait on a late font request.
+ * Preload the two critical WOFF2 files (Fraunces latin — the H1/LCP face since
+ * Fase 1 — + Inter variable latin) so the LCP heading text does not wait on a
+ * late font request. Anton is now only used for stat numerals, so it is not
+ * preloaded.
  */
 add_action(
 	'wp_head',
 	function () {
 		$fonts = array(
-			'assets/fonts/anton-latin-400.woff2',
+			'assets/fonts/fraunces-latin-wght-normal.woff2',
 			'assets/fonts/inter-latin-var.woff2',
 		);
 		foreach ( $fonts as $rel ) {
@@ -30,7 +32,7 @@ add_action(
 			);
 		}
 
-		// Favicon (placeholder mark — swap for the final brand asset).
+		// Favicon (official mark, traced from the client's logo file).
 		printf(
 			'<link rel="icon" href="%s" type="image/svg+xml">' . "\n",
 			esc_url( BLACKROLL_URI . '/assets/images/favicon.svg' )
@@ -111,8 +113,17 @@ add_action(
 		// Product-page 3D showcase (client decision 2026-09 — premium look over
 		// loading-speed score). Only where the theme actually renders a
 		// [data-blackroll-3d] container, so it never loads elsewhere.
-		if ( is_page_template( 'template-product.html' ) ) {
+		// Block themes store the template slug without ".html" ("template-product");
+		// the old ".html"-only check never matched, so this script never loaded.
+		if ( is_page_template( array( 'template-product', 'template-product.html' ) ) ) {
 			blackroll_enqueue_module( 'blackroll-product-3d', 'product-3d.js' );
+		}
+
+		// Homepage hero "The Blind Reveal" (Fase 2). The entry is ~1.5 KB; it
+		// fetches three.js only after idle and only if the device passes the
+		// 3D gate (assets/js/three-gate.js).
+		if ( is_front_page() ) {
+			blackroll_enqueue_module( 'blackroll-home-hero-3d', 'home-hero-3d.js' );
 		}
 	}
 );

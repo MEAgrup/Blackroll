@@ -123,10 +123,9 @@ dengan benar" — supaya situs tidak terlihat rusak sebelum aset asli datang:
       "Pratinjau 3D interaktif — tampil di perangkat yang mendukung" — ini fallback teks yang
       benar selama belum ada `npm run build` di server (lihat catatan di bawah) atau di
       perangkat tanpa WebGL/koneksi lambat/`prefers-reduced-motion`.
-- [ ] **Kalau ingin animasi/3D-nya benar-benar tampil** (bukan cuma fallback): jalankan
-      `npm install && npm run build` di dalam folder repo sebelum `rsync` di Langkah 3, supaya
-      `themes/blackroll/assets/js/dist/` ikut ter-generate dan ter-copy ke server. Tanpa ini,
-      situs tetap berfungsi penuh (fallback teks/gambar statis tampil), cuma belum ada animasinya.
+- [ ] **Animasi/3D tidak butuh build di server lagi.** Sejak Fase 2, hasil build JS
+      (`themes/blackroll/assets/js/dist/`) ikut di-commit ke repo, jadi `git pull` + `rsync`
+      sudah membawa hero 3D dan 3D halaman produk. Tidak perlu Node/npm di Hostinger.
 
 ---
 
