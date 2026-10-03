@@ -28,7 +28,7 @@
 			<h3 class="wp-block-heading has-x-large-font-size"><?php esc_html_e( 'Dipercaya Kontraktor', 'blackroll' ); ?></h3>
 			<!-- /wp:heading -->
 			<!-- wp:paragraph -->
-			<p><?php esc_html_e( 'Kualitas produksi teknologi terbaru: tahan air & minyak, anti-bakteri, anti-jamur, desain minimalis.', 'blackroll' ); ?> <a href="/portofolio/"><?php esc_html_e( 'Lihat portofolio', 'blackroll' ); ?></a></p>
+			<p><?php esc_html_e( 'Kualitas produksi teknologi terbaru: tahan air & minyak, anti-bakteri, anti-jamur, desain minimalis. Ready stock — dari konsultasi hingga pemasangan cepat dan efisien.', 'blackroll' ); ?> <a href="/portofolio/"><?php esc_html_e( 'Lihat portofolio', 'blackroll' ); ?></a></p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:column -->

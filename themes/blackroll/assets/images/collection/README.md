@@ -4,9 +4,31 @@ Curated from the 19 client zips (431 photos, 6000px originals). Every image is
 white-balanced against the wall, exported to WebP (max 1600px), and cropped so the
 third-party store signage painted on the studio wall is not in frame.
 
-Colour names below are working labels. The client still has to map each
-`blind N` folder to its SKU; `A004` (Roller, RBXL) and `S004` (Zebra, XLS) are the
-only two confirmed from the folder names.
+Colour names below are working labels. `A004` (Roller, RBXL) and `S004` (Zebra,
+XLS) are confirmed from the folder names. The other SKUs use a **provisional
+mapping chosen by MEA** (the client asked us to decide, 2026-10-02); it lives in
+`blackroll_shade_photo_keys()` in `plugins/blackroll-core/inc/selector.php`:
+
+| SKU | Material | Photo key |
+|---|---|---|
+| A004 | Solar Screen | `a004` (confirmed) |
+| S004 | Zebra | `zebra-s004` (confirmed) |
+| SV003C | Blackout | `silver-linen` |
+| WD003C | Blackout | `taupe` |
+| LD002B | Blackout | `light-grey` |
+| HG001A | Blackout | `grey` |
+| H003 | Blackout | `lavender-grey` |
+| K004 | Blackout | `charcoal-linen` |
+| L003 | Blackout | `beige` |
+| B001 | Solar Screen | `mist-solar` |
+| C003 | Solar Screen | `cloud` |
+| E003 | Solar Screen | `sky` |
+| F001 | Solar Screen | `snow-texture` |
+| W001 | Zebra | `zebra-white` |
+| V001 | Zebra | `zebra-ivory` |
+
+`white`, `ivory`, `chalk` and `pure-white` are not mapped: the White Series
+(ML…) shades already have their own photos in the Media Library.
 
 | key | source folder | front | up (rolled) | detail |
 |---|---|---|---|---|

@@ -12,7 +12,7 @@ kali satu fase selesai.
 | 0 | Perbaikan bug situs live, logo resmi, kurasi foto | ✅ Selesai ([PR #2](https://github.com/MEAgrup/Blackroll/pull/2)) |
 | 1 | Visual premium: layout, tipografi, motion | ⏳ Siap dikerjakan (desain diserahkan ke MEA) |
 | 2 | Hero homepage Three.js "The Blind Reveal" | ⏳ Bisa jalan tanpa klien |
-| 3 | Koleksi (Roller utama, Zebra pelengkap) + susunan homepage baru | ⏳ Bisa jalan; foto per SKU menyusul pemetaan |
+| 3 | Koleksi (Roller utama, Zebra pelengkap) + susunan homepage baru | ⏳ Siap dikerjakan (pemetaan SKU sudah ada) |
 | 4 | QA + deploy ke Hostinger | ⏳ |
 
 ---
@@ -128,17 +128,15 @@ tindakan di wp-admin (lihat `deploy/DEPLOY.md` §2).
 
 Karena desain diserahkan ke MEA, **keputusan font (D5) diambil tim MEA di Fase 1**.
 
-## Masih menunggu dari klien (tidak memblokir)
+## Jawaban klien lanjutan (2026-10-02)
 
-1. **Pemetaan folder `blind 2…19` ke kode SKU.** Tambahkan ke
-   `blackroll_shade_photo_keys()` di `plugins/blackroll-core/inc/selector.php`.
-   Sampai ada, swatch tanpa foto tampil sebagai chip SKU.
-2. **Foto motor/remote** untuk halaman Motorized.
-3. **Angka klaim** (">100 proyek", "ready stock"): boleh ditampilkan?
-4. Instagram resmi: `@blackroll.blinds` (footer) atau `@blackroll.official`
-   (dokumen landing page)?
-5. Daftar proyek residence/commercial (nama/kota/foto) untuk Portofolio —
-   paling relevan karena bisnis sekarang berbasis proyek.
+| Pertanyaan | Jawaban | Status |
+|---|---|---|
+| Pemetaan folder `blind N` → SKU | "Tentukan saja dulu" | ✅ Pemetaan sementara oleh MEA di `blackroll_shade_photo_keys()`; tabel di `themes/blackroll/assets/images/collection/README.md`. Semua 24 SKU sekarang punya foto. |
+| Foto motor/remote | Tidak ada; cukup foto manual | ✅ Galeri Motorized tetap memakai foto kain/hardware tanpa rantai. |
+| Klaim ">100 proyek", "ready stock" | Boleh ditampilkan | ✅ "100+" sudah ada; "ready stock" ditambahkan di section kepercayaan homepage. |
+| Instagram resmi | `@blackroll.official` | ✅ Footer, blok kontak cadangan, dan schema diganti. |
+| Daftar proyek untuk Portofolio | Menyusul | ⏳ Portofolio tetap memakai data lama sampai daftar proyek masuk. |
 
 ## Perlu dikerjakan tim MEA di wp-admin production
 

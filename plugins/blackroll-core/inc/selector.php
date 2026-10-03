@@ -58,8 +58,13 @@ function blackroll_shade_image( $post_id, $meta, $size = 'blackroll-preview' ) {
 
 /**
  * SKU → curated photo key in the theme (themes/blackroll/assets/images/collection/).
- * Only SKUs confirmed from the client's folder names are listed; add the rest
- * once the client maps the "blind N" folders to SKUs (see the README there).
+ *
+ * A004 and S004 come straight from the client's folder names. The rest is a
+ * provisional mapping chosen by MEA (client said to decide it, 2026-10-02):
+ * each SKU without a Media Library photo gets the shoot colour that best
+ * fits its code and material. Shades that already have a photo (the ML
+ * series, D003, M001) keep it; this map is only their fallback. Change a
+ * line here to re-map; see the collection README for what each key looks like.
  *
  * @return array<string,string>
  */
@@ -67,8 +72,25 @@ function blackroll_shade_photo_keys() {
 	return apply_filters(
 		'blackroll_shade_photo_keys',
 		array(
-			'A004' => 'a004',       // Folder "Roller blindes RBXL A004".
-			'S004' => 'zebra-s004', // Folder "XLS004".
+			// Confirmed from folder names.
+			'A004'   => 'a004',           // Solar Screen — folder "Roller blindes RBXL A004".
+			'S004'   => 'zebra-s004',     // Zebra — folder "XLS004".
+			// Provisional (MEA), Blackout · Black Series.
+			'SV003C' => 'silver-linen',   // SV = silver.
+			'WD003C' => 'taupe',          // WD = wood tone.
+			'LD002B' => 'light-grey',
+			'HG001A' => 'grey',
+			'H003'   => 'lavender-grey',
+			'K004'   => 'charcoal-linen',
+			'L003'   => 'beige',          // L = linen.
+			// Provisional (MEA), Solar Screen.
+			'B001'   => 'mist-solar',
+			'C003'   => 'cloud',
+			'E003'   => 'sky',
+			'F001'   => 'snow-texture',
+			// Provisional (MEA), Zebra.
+			'W001'   => 'zebra-white',
+			'V001'   => 'zebra-ivory',
 		)
 	);
 }

@@ -60,7 +60,7 @@ add_action(
 				'addressCountry'  => $b['country'],
 			),
 			'sameAs'   => array(
-				'https://instagram.com/blackroll.blinds',
+				'https://instagram.com/blackroll.official',
 				'https://www.tiktok.com/@blackroll.official',
 			),
 		);

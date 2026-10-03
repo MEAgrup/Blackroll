@@ -90,7 +90,7 @@ add_shortcode(
 			</p>
 			<ul class="blackroll-fallback-contact__list">
 				<li><a href="<?php echo esc_url( $wa_link ); ?>" rel="noopener">WhatsApp: <?php echo esc_html( $wa_disp ); ?></a></li>
-				<li><a href="https://instagram.com/blackroll.blinds" rel="noopener">Instagram: @blackroll.blinds</a></li>
+				<li><a href="https://instagram.com/blackroll.official" rel="noopener">Instagram: @blackroll.official</a></li>
 				<li><a href="https://www.tiktok.com/@blackroll.official" rel="noopener">TikTok Shop: @blackroll.official</a></li>
 				<li><a href="https://shopee.co.id/blackroll.official" rel="noopener">Shopee: @blackroll.official</a></li>
 			</ul>
