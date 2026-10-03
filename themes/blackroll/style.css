@@ -1,0 +1,21 @@
+/*
+Theme Name: Blackroll
+Theme URI: https://blackrollblinds.com
+Author: MEA Agency
+Author URI: https://meagency.co.id
+Description: Custom block theme for Blackroll — "Affordable Premium Blinds for Modern Living". Monochrome, bilingual (ID/EN via Polylang), performance-first (LCP < 2.5s mobile 4G), Lottie sitewide with Three.js scoped to Product pages. Companion plugin: blackroll-core. No page builder.
+Requires at least: 6.5
+Tested up to: 6.7
+Requires PHP: 8.1
+Version: 0.1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: blackroll
+Tags: block-theme, full-site-editing, custom-colors, custom-menu, translation-ready, blog, portfolio
+*/
+
+/*
+ * Design tokens, base styles, motion utilities and component CSS live in
+ * assets/css/ and are enqueued from inc/enqueue.php (see functions.php).
+ * This file exists for the WordPress theme header only.
+ */

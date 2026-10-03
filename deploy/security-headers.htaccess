@@ -1,0 +1,20 @@
+# Blackroll — optional server-level security headers (Apache/LiteSpeed).
+# Append to the site root .htaccess. CSP itself is sent by blackroll-core (PHP)
+# so it can switch report-only → enforce via a constant; keep it there.
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    # HSTS — enable only once HTTPS is confirmed site-wide.
+    Header always set Strict-Transport-Security "max-age=15552000; includeSubDomains"
+    Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Disable directory listing.
+Options -Indexes
+
+# Protect wp-config.php.
+<Files wp-config.php>
+    Require all denied
+</Files>

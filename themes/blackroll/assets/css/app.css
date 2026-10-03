@@ -1,0 +1,587 @@
+/*
+ * Blackroll — component & layout styles.
+ * Design tokens (colour, type, spacing) come from theme.json CSS custom
+ * properties (--wp--preset--*). This file styles the pieces theme.json can't:
+ * the floating CTA, skip link, focus states, selector, portfolio, lightbox,
+ * motion fallbacks. Accessibility items per PATCH-13.
+ */
+
+/* ---------- Base / a11y ---------- */
+
+:where(body) {
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video {
+	max-width: 100%;
+	height: auto;
+}
+
+/* Visible focus states — monochrome-safe (PATCH-13). */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+	outline: 2px solid var(--wp--preset--color--black);
+	outline-offset: 2px;
+	border-radius: 1px;
+}
+
+/* On dark backgrounds, invert the focus ring. */
+.has-black-background-color :focus-visible,
+.has-charcoal-background-color :focus-visible,
+.blackroll-dark :focus-visible {
+	outline-color: var(--wp--preset--color--white);
+}
+
+/* Skip-to-content link — first focusable element (PATCH-13). */
+.blackroll-skip-link {
+	position: absolute;
+	left: -9999px;
+	top: 0;
+	z-index: 9999;
+	padding: 0.75rem 1.25rem;
+	background: var(--wp--preset--color--black);
+	color: var(--wp--preset--color--white);
+	text-decoration: none;
+	font-family: var(--wp--preset--font-family--heading);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+.blackroll-skip-link:focus {
+	left: 1rem;
+	top: 1rem;
+}
+
+/* Minimum tap target site-wide (Module 3 rule, extended). */
+:where(.wp-block-navigation a, .wp-element-button, .blackroll-floating-cta, .blackroll-filter__btn) {
+	min-height: 44px;
+	min-width: 44px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/*
+ * Links inside dark sections. theme.json sets the global link colour to
+ * black, which made in-text links on black/charcoal sections invisible
+ * (e.g. "Lihat Detail · Hubungi Kami" on the homepage product preview).
+ * Buttons keep their own colours.
+ */
+:where(.blackroll-dark, .has-black-background-color, .has-charcoal-background-color)
+	a:where(:not(.wp-element-button):not(.blackroll-floating-cta)) {
+	color: var(--wp--preset--color--white);
+}
+
+/*
+ * Page sections sit flush. The root blockGap (40px) was showing as white
+ * bands between the header, the full-width dark sections and the footer;
+ * every section carries its own vertical padding instead.
+ */
+.wp-site-blocks > * + *,
+#blackroll-content > * {
+	margin-block-start: 0;
+}
+
+/* ---------- Logo (patterns/site-logo.php) ---------- */
+
+.blackroll-logo {
+	display: inline-flex;
+	align-items: center;
+	color: inherit;
+	line-height: 0;
+}
+.blackroll-logo svg {
+	display: block;
+	height: clamp(1.5rem, 3.2vw, 1.9rem);
+	width: auto;
+}
+.blackroll-logo--full svg {
+	height: 7.5rem;
+}
+
+/* ---------- Language switcher ---------- */
+
+.blackroll-lang-switcher {
+	list-style: none;
+	display: flex;
+	gap: 0.5rem;
+	margin: 0;
+	padding: 0;
+	text-transform: uppercase;
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	letter-spacing: 0.06em;
+}
+.blackroll-lang-switcher li {
+	margin: 0;
+}
+.blackroll-lang-switcher a {
+	text-decoration: none;
+	opacity: 0.7;
+}
+.blackroll-lang-switcher .current-lang a,
+.blackroll-lang-switcher a:hover {
+	opacity: 1;
+	text-decoration: underline;
+}
+
+/* ---------- Bottom-floating CTA (all pages, Module 2) ---------- */
+
+.blackroll-floating-cta {
+	position: fixed;
+	right: var(--wp--custom--cta--floating--offset, 1.5rem);
+	bottom: calc(var(--wp--custom--cta--floating--offset, 1.5rem) + env(safe-area-inset-bottom, 0px));
+	z-index: 900;
+	padding: 0.85rem 1.5rem;
+	background: var(--wp--preset--color--black);
+	color: var(--wp--preset--color--white);
+	font-family: var(--wp--preset--font-family--heading);
+	font-size: var(--wp--preset--font-size--small);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	text-decoration: none;
+	box-shadow: 0 6px 24px rgba(10, 10, 10, 0.28);
+	transition: transform var(--wp--custom--transition--base, 180ms ease),
+		background-color var(--wp--custom--transition--base, 180ms ease);
+}
+.blackroll-floating-cta:hover,
+.blackroll-floating-cta:focus {
+	background: var(--wp--preset--color--charcoal);
+	transform: translateY(-2px);
+	color: var(--wp--preset--color--white);
+}
+
+/*
+ * Phones: the floating CTA covered body copy and footer links. Make it a
+ * full-width bar pinned to the bottom edge and reserve that height at the
+ * end of the page so nothing sits permanently underneath it.
+ */
+@media (max-width: 781px) {
+	.blackroll-floating-cta {
+		left: 0;
+		right: 0;
+		bottom: 0;
+		justify-content: center;
+		padding: 0.9rem 1rem calc(0.9rem + env(safe-area-inset-bottom, 0px));
+		box-shadow: 0 -4px 18px rgba(10, 10, 10, 0.18);
+		border-top: 1px solid var(--wp--preset--color--charcoal);
+	}
+	.blackroll-floating-cta:hover,
+	.blackroll-floating-cta:focus {
+		transform: none;
+	}
+	body {
+		padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+	}
+}
+
+/* ---------- Fallback contact block (Module 9) ---------- */
+
+.blackroll-fallback-contact {
+	border: 1px solid var(--wp--preset--color--hairline);
+	padding: var(--wp--preset--spacing--40, 1.5rem);
+}
+.blackroll-fallback-contact__lead {
+	font-family: var(--wp--preset--font-family--heading);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	margin: 0 0 0.75rem;
+}
+.blackroll-fallback-contact__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: grid;
+	gap: 0.5rem;
+}
+
+/* ---------- Material & Color selector (Module 6) ---------- */
+
+.blackroll-selector {
+	display: grid;
+	gap: var(--wp--preset--spacing--40, 2rem);
+	grid-template-columns: 1fr;
+	align-items: start;
+}
+@media (min-width: 782px) {
+	.blackroll-selector {
+		grid-template-columns: 1.1fr 0.9fr;
+	}
+	.blackroll-selector__cta {
+		grid-column: 1 / -1;
+	}
+}
+.blackroll-selector__controls {
+	display: grid;
+	gap: var(--wp--preset--spacing--30, 1rem);
+}
+.blackroll-option-block__label {
+	font-family: var(--wp--preset--font-family--heading);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	font-size: var(--wp--preset--font-size--small);
+	margin: 0 0 0.5rem;
+}
+.blackroll-swatches {
+	gap: 0.5rem;
+}
+.blackroll-swatch[hidden],
+.blackroll-option[hidden] {
+	display: none;
+}
+.screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+	white-space: nowrap;
+}
+.blackroll-option-group {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+.blackroll-option {
+	border: 1px solid var(--wp--preset--color--black);
+	background: var(--wp--preset--color--white);
+	color: var(--wp--preset--color--black);
+	padding: 0.6rem 1rem;
+	font-size: var(--wp--preset--font-size--small);
+	cursor: pointer;
+	transition: background-color var(--wp--custom--transition--base, 180ms ease),
+		color var(--wp--custom--transition--base, 180ms ease);
+}
+.blackroll-option[aria-pressed='true'] {
+	background: var(--wp--preset--color--black);
+	color: var(--wp--preset--color--white);
+}
+.blackroll-swatch {
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	border: 2px solid var(--wp--preset--color--hairline);
+	background-size: cover;
+	background-position: center;
+}
+.blackroll-swatch[aria-pressed='true'] {
+	border-color: var(--wp--preset--color--black);
+	box-shadow: 0 0 0 2px var(--wp--preset--color--white), 0 0 0 4px var(--wp--preset--color--black);
+}
+.blackroll-selector__preview {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	background: var(--wp--preset--color--charcoal);
+	overflow: hidden;
+}
+.blackroll-selector__preview img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: opacity var(--wp--custom--transition--base, 180ms ease);
+}
+.blackroll-selector__preview img[hidden] {
+	display: none;
+}
+/*
+ * The label sat under a 100%-height image inside an overflow:hidden square,
+ * so it was never visible. Overlay it on the bottom edge instead.
+ */
+.blackroll-selector__label {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	padding: 0.75rem 1rem;
+	background: linear-gradient(0deg, rgba(10, 10, 10, 0.78), rgba(10, 10, 10, 0));
+	color: var(--wp--preset--color--white);
+	font-family: var(--wp--preset--font-family--heading);
+	text-transform: uppercase;
+	letter-spacing: 0.03em;
+}
+.blackroll-selector__label:empty {
+	display: none;
+}
+.blackroll-selector__empty {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 2rem;
+	text-align: center;
+	color: var(--wp--preset--color--white);
+	font-size: var(--wp--preset--font-size--small);
+	line-height: 1.5;
+}
+.blackroll-selector__empty[hidden] {
+	display: none;
+}
+
+/* Shades without a swatch photo yet: show the SKU instead of a blank tile. */
+.blackroll-swatch--code {
+	width: auto;
+	min-width: 44px;
+	padding: 0 0.6rem;
+	background: var(--wp--preset--color--white);
+	color: var(--wp--preset--color--black);
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+}
+
+/* ---------- Portfolio grid + filter (Module 7) ---------- */
+
+.blackroll-filter {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: var(--wp--preset--spacing--40, 1.5rem);
+}
+.blackroll-filter__btn {
+	border: 1px solid var(--wp--preset--color--black);
+	background: transparent;
+	padding: 0.5rem 1.1rem;
+	font-size: var(--wp--preset--font-size--small);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	cursor: pointer;
+}
+.blackroll-filter__btn[aria-pressed='true'] {
+	background: var(--wp--preset--color--black);
+	color: var(--wp--preset--color--white);
+}
+.blackroll-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: var(--wp--preset--spacing--30, 1rem);
+}
+.blackroll-grid__item {
+	position: relative;
+	aspect-ratio: 4 / 3;
+	overflow: hidden;
+	background: var(--wp--preset--color--hairline);
+}
+.blackroll-grid__item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition: transform 300ms ease;
+}
+.blackroll-grid__item:hover img {
+	transform: scale(1.03);
+}
+.blackroll-grid__item[hidden] {
+	display: none;
+}
+.blackroll-loadmore {
+	text-align: center;
+	margin-top: var(--wp--preset--spacing--40, 1.5rem);
+}
+
+/* ---------- Lightbox (Module 7 — self-hosted, focus-trapped) ---------- */
+
+.blackroll-lightbox {
+	position: fixed;
+	inset: 0;
+	z-index: 1000;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	padding: 1.5rem;
+	background: rgba(10, 10, 10, 0.92);
+}
+.blackroll-lightbox[open],
+.blackroll-lightbox.is-open {
+	display: flex;
+}
+.blackroll-lightbox__img {
+	max-width: min(1100px, 100%);
+	max-height: 88vh;
+	object-fit: contain;
+}
+.blackroll-lightbox__close {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	background: transparent;
+	border: 2px solid var(--wp--preset--color--white);
+	color: var(--wp--preset--color--white);
+	width: 44px;
+	height: 44px;
+	font-size: 1.25rem;
+	cursor: pointer;
+}
+
+/* ---------- "Coming soon" state for progressive EN (D6) ---------- */
+
+.blackroll-coming-soon {
+	text-align: center;
+	padding: var(--wp--preset--spacing--60, 4rem) var(--wp--preset--spacing--30, 1rem);
+}
+
+/* ---------- Sebari lead form (Module 9) ---------- */
+
+.blackroll-sebari-form {
+	display: grid;
+	gap: var(--wp--preset--spacing--30, 1rem);
+	max-width: 480px;
+}
+.blackroll-sebari-form .blackroll-field {
+	display: grid;
+	gap: 0.35rem;
+	margin: 0;
+}
+.blackroll-sebari-form label {
+	font-family: var(--wp--preset--font-family--heading);
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	font-size: var(--wp--preset--font-size--small);
+}
+.blackroll-sebari-form input[type='text'],
+.blackroll-sebari-form input[type='tel'] {
+	padding: 0.75rem;
+	border: 1px solid var(--wp--preset--color--black);
+	font-size: 1rem;
+	min-height: 44px;
+	background: var(--wp--preset--color--white);
+}
+.blackroll-sebari-form__note {
+	font-size: var(--wp--preset--font-size--small);
+	color: var(--wp--preset--color--grey-text);
+}
+.blackroll-sebari-form__error {
+	color: #b00020;
+	font-size: var(--wp--preset--font-size--small);
+}
+.blackroll-sebari-form__result {
+	border: 1px solid var(--wp--preset--color--black);
+	padding: var(--wp--preset--spacing--40, 1.5rem);
+}
+
+/* Breadcrumbs */
+.blackroll-breadcrumbs {
+	font-size: var(--wp--preset--font-size--small);
+	letter-spacing: 0.02em;
+	margin-bottom: var(--wp--preset--spacing--20, 0.75rem);
+}
+
+/* ---------- Motion (Module 2) ---------- */
+
+.blackroll-lottie {
+	display: block;
+}
+.blackroll-lottie__fallback {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+/* ---------- Premium hero video + Product 3D showcase ----------
+ * Client decision (2026-09): premium look over loading-speed score on these
+ * two spots — see deploy/QA-CHECKLIST.md. Both stay no-op/static until
+ * assets/js/motion.js and product-3d.js actually mount (built bundle present
+ * + capability gate passes), so there is no layout shift either way: the
+ * poster/fallback fills the same box the video/canvas would take over. */
+
+.blackroll-hero {
+	position: relative;
+	overflow: hidden;
+}
+.blackroll-hero__media {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	overflow: hidden;
+}
+.blackroll-hero__video {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	opacity: 0.5; /* keeps the H1/paragraph legible over motion, on top of the dark bg */
+}
+/* Lift the real content above the absolutely-positioned video layer. */
+.blackroll-hero > *:not(.blackroll-hero__media) {
+	position: relative;
+	z-index: 1;
+}
+
+.blackroll-3d-slot {
+	position: relative;
+	aspect-ratio: 1 / 1;
+	max-width: 480px;
+	margin: var(--wp--preset--spacing--40, 2rem) auto;
+	background: var(--wp--preset--color--charcoal);
+	display: grid;
+	place-items: center;
+	overflow: hidden;
+}
+.blackroll-3d-slot__canvas {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+.blackroll-3d-slot__fallback {
+	/* On the dark --charcoal background, --grey-text (tuned for AA on white)
+	   would fail contrast — --grey is the one that passes AA on dark here. */
+	color: var(--wp--preset--color--grey);
+	text-align: center;
+	padding: 0 1.5rem;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.001ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.001ms !important;
+		scroll-behavior: auto !important;
+	}
+	.blackroll-floating-cta {
+		transition: none;
+	}
+}
+
+/* ---------- Product photo gallery (blackroll_product_gallery) ---------- */
+
+.blackroll-gallery {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 0.5rem;
+	margin-block: var(--wp--preset--spacing--40, 2rem);
+}
+.blackroll-gallery__item {
+	margin: 0;
+	overflow: hidden;
+	background: var(--wp--preset--color--hairline);
+	aspect-ratio: 1 / 1;
+}
+.blackroll-gallery__item--lead {
+	grid-column: 1 / -1;
+	aspect-ratio: 16 / 10;
+}
+.blackroll-gallery--portrait .blackroll-gallery__item--lead {
+	aspect-ratio: 4 / 5;
+}
+@media (min-width: 600px) {
+	.blackroll-gallery--portrait {
+		grid-template-columns: 2fr 1fr;
+	}
+	.blackroll-gallery--portrait .blackroll-gallery__item--lead {
+		grid-column: 1;
+		grid-row: 1 / span 3;
+		aspect-ratio: auto;
+	}
+}
+.blackroll-gallery__item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}

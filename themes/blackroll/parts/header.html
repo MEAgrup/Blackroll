@@ -1,0 +1,24 @@
+<!-- wp:group {"tagName":"header","className":"blackroll-header blackroll-dark","style":{"spacing":{"padding":{"top":"var:preset|spacing|20","bottom":"var:preset|spacing|20"}}},"backgroundColor":"black","textColor":"white","layout":{"type":"constrained"}} -->
+<header class="wp-block-group blackroll-header blackroll-dark has-white-color has-black-background-color has-text-color has-background" style="padding-top:var(--wp--preset--spacing--20);padding-bottom:var(--wp--preset--spacing--20)">
+	<!-- wp:group {"align":"wide","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"center"}} -->
+	<div class="wp-block-group alignwide">
+		<!-- wp:pattern {"slug":"blackroll/site-logo"} /-->
+
+		<!-- wp:navigation {"textColor":"white","overlayBackgroundColor":"black","overlayTextColor":"white","layout":{"type":"flex","setCascadingProperties":true,"justifyContent":"right","flexWrap":"wrap"}} -->
+			<!-- wp:navigation-link {"label":"Beranda","url":"/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-link {"label":"Tentang Kami","url":"/tentang-kami/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-submenu {"label":"Produk","url":"/produk/","kind":"custom","isTopLevelItem":true} -->
+				<!-- wp:navigation-link {"label":"Blinds Manual","url":"/produk/blinds-manual/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"Blinds Motorized","url":"/produk/blinds-motorized/","kind":"custom"} /-->
+			<!-- /wp:navigation-submenu -->
+			<!-- wp:navigation-link {"label":"Material & Warna","url":"/material-warna/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-link {"label":"Portofolio","url":"/portofolio/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-link {"label":"Artikel","url":"/artikel/","kind":"custom","isTopLevelLink":true} /-->
+			<!-- wp:navigation-link {"label":"Kontak","url":"/kontak/","kind":"custom","isTopLevelLink":true} /-->
+		<!-- /wp:navigation -->
+
+		<!-- wp:shortcode -->[blackroll_language_switcher]<!-- /wp:shortcode -->
+	</div>
+	<!-- /wp:group -->
+</header>
+<!-- /wp:group -->

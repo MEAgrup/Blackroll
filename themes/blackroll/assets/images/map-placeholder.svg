@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" role="img" aria-label="Peta lokasi toko Blackroll — placeholder">
+	<rect width="600" height="360" fill="#EDEDED"/>
+	<path d="M0 250 L180 210 L360 260 L600 220" stroke="#D2D2D2" stroke-width="10" fill="none"/>
+	<path d="M120 0 L150 180 L90 360" stroke="#D8D8D8" stroke-width="14" fill="none"/>
+	<path d="M420 0 L400 200 L470 360" stroke="#D8D8D8" stroke-width="14" fill="none"/>
+	<circle cx="300" cy="180" r="14" fill="#0A0A0A"/>
+	<path d="M300 194 L288 214 L312 214 Z" fill="#0A0A0A"/>
+	<text x="300" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#8A8A8A">Blackroll — Bandung (peta statis placeholder)</text>
+</svg>
