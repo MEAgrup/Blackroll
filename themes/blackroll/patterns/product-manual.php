@@ -21,17 +21,23 @@ echo "<!-- wp:html -->\n" . blackroll_product_gallery( // phpcs:ignore WordPress
 	array(
 		array( 'hero-clean.webp', __( 'Roller blind Blackroll terpasang, sistem rantai', 'blackroll' ) ),
 		array( 'detail-bottom-bar.webp', __( 'Bottom bar aluminium hitam dengan logo Blackroll', 'blackroll' ) ),
-		array( 'detail-bracket.webp', __( 'Bracket dan tabung penggulung roller blind', 'blackroll' ) ),
-		array( 'detail-chain.webp', __( 'Mekanisme rantai manual roller blind', 'blackroll' ) ),
+		array( 'detail-bracket.webp', __( 'Mekanisme rantai manual dan tabung penggulung', 'blackroll' ) ),
+		array( 'detail-chain.webp', __( 'Bracket hitam roller blind', 'blackroll' ) ),
 	)
 ) . "\n<!-- /wp:html -->\n";
 ?>
 
-<?php /* Premium 3D showcase (client decision 2026-09) — real model/texture pending from the rollerblind team (feedback #5); mount3D() ships a generic monochrome placeholder scene. Gated by assets/js/product-3d.js: falls back to the text below on prefers-reduced-motion, no WebGL, or a slow/metered connection. */ ?>
+<?php /* 3D showcase (Fase 2): the same blind scene as the homepage hero (assets/js/blind-scene.js), with real fabric from the client shoot. Gated by assets/js/three-gate.js — on reduced motion, no WebGL or a slow connection the photo below stays and three.js is never fetched. */ ?>
 <!-- wp:html -->
-<div class="blackroll-3d-slot" data-blackroll-3d>
-	<p class="blackroll-3d-slot__fallback"><?php esc_html_e( 'Pratinjau 3D interaktif — tampil di perangkat yang mendukung.', 'blackroll' ); ?></p>
-</div>
+<figure class="blackroll-3d">
+	<div class="blackroll-3d-slot" data-blackroll-3d data-chain="true" data-texture="<?php echo esc_url( get_template_directory_uri() . '/assets/images/collection/charcoal-linen-swatch.webp' ); ?>">
+		<img class="blackroll-3d-slot__fallback" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/collection/charcoal-linen-front.webp' ); ?>" alt="<?php esc_attr_e( 'Roller blind Blackroll warna charcoal linen', 'blackroll' ); ?>" width="1284" height="1600" loading="lazy" decoding="async">
+	</div>
+	<label class="blackroll-3d__range" data-blackroll-3d-range hidden>
+		<span><?php esc_html_e( 'Geser untuk menggulung blind', 'blackroll' ); ?></span>
+		<input type="range" min="0" max="100" value="0">
+	</label>
+</figure>
 <!-- /wp:html -->
 
 <!-- wp:heading {"level":2,"fontSize":"x-large"} -->

@@ -29,7 +29,15 @@
  *          data-src="/path/to/hero.mp4" muted loop playsinline
  *          preload="none" poster="static-poster.jpg"></video>
  */
-import lottie from 'lottie-web/build/player/lottie_light';
+// lottie-web is imported lazily (below) — only pages that actually carry a
+// [data-lottie] node download it; no page does yet.
+let lottiePromise = null;
+function loadLottie() {
+	if ( ! lottiePromise ) {
+		lottiePromise = import( 'lottie-web/build/player/lottie_light' ).then( ( m ) => m.default );
+	}
+	return lottiePromise;
+}
 
 const reduce = window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 
@@ -48,7 +56,7 @@ function isSlowConnection() {
 	return /2g|3g/.test( conn.effectiveType || '' );
 }
 
-function initLottie( el ) {
+async function initLottie( el ) {
 	const src = el.getAttribute( 'data-lottie' );
 	if ( ! src ) {
 		return;
@@ -57,6 +65,7 @@ function initLottie( el ) {
 	mount.className = 'blackroll-lottie__canvas';
 	el.appendChild( mount );
 	try {
+		const lottie = await loadLottie();
 		lottie.loadAnimation( {
 			container: mount,
 			renderer: 'svg',

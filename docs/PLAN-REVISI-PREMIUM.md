@@ -10,10 +10,10 @@ kali satu fase selesai.
 | Fase | Isi | Status |
 |---|---|---|
 | 0 | Perbaikan bug situs live, logo resmi, kurasi foto | ✅ Selesai ([PR #2](https://github.com/MEAgrup/Blackroll/pull/2)) |
-| 1 | Visual premium: layout, tipografi, motion | ⏳ Siap dikerjakan (desain diserahkan ke MEA) |
-| 2 | Hero homepage Three.js "The Blind Reveal" | ⏳ Bisa jalan tanpa klien |
-| 3 | Koleksi (Roller utama, Zebra pelengkap) + susunan homepage baru | ⏳ Siap dikerjakan (pemetaan SKU sudah ada) |
-| 4 | QA + deploy ke Hostinger | ⏳ |
+| 1 | Visual premium: layout, tipografi, motion | ✅ Selesai (PR Fase 1+2) |
+| 2 | Hero homepage Three.js "The Blind Reveal" | ✅ Selesai (PR Fase 1+2) |
+| 3 | Koleksi (Roller utama, Zebra pelengkap) + susunan homepage baru | 🟡 Homepage selesai (section Koleksi + Zebra). Sisa: halaman koleksi terpisah + Portofolio (menunggu daftar proyek) |
+| 4 | QA + deploy ke Hostinger | ⏳ Ikuti `docs/TUTORIAL-GROK-WP-ADMIN.md` |
 
 ---
 
@@ -57,6 +57,31 @@ tindakan di wp-admin (lihat `deploy/DEPLOY.md` §2).
 - Kurasi foto: foto depan, foto tergulung, detail, swatch, dan tekstur kain per warna.
 - Galeri foto di halaman Manual dan Motorized; baris "ruangan" di homepage
   memakai foto produk asli.
+
+## Hasil Fase 1 + 2 (2026-10-03)
+
+- **Tipografi:** judul H1/H2 memakai **Fraunces** (serif, self-hosted, OFL) dengan aksen
+  *italic*; label dan tombol memakai Inter kapital dengan spasi lebar, mengikuti tagline
+  "BLACK IS COOL". Anton hanya untuk angka besar.
+- **Palet:** hitam/putih + `stone` (#EDE9E3) untuk section hangat, `sand` untuk garis,
+  `bronze` untuk aksen tipis.
+- **Homepage baru:** Hero 3D → strip angka (100+, 24 warna, Ready stock, 5 lapis) →
+  Koleksi Roller (6 warna) + kartu Zebra → Manual vs Motorized → Detail kualitas →
+  Portofolio → CTA.
+- **Motion:** reveal saat scroll pakai CSS murni (scroll-driven animation), mati otomatis
+  untuk reduced-motion; tidak ada konten yang tersembunyi di browser lama.
+- **Hero 3D:** `assets/js/blind-scene.js` (scene bersama) + `home-hero-3d.js`.
+  Blind turun saat halaman dibuka, tergulung saat scroll, 6 warna Roller + 3 Zebra,
+  toggle Roller/Zebra. Three.js 135 KB gzip, dimuat setelah idle.
+- **Halaman produk:** placeholder 3D diganti blind 3D yang sama + slider
+  "Geser untuk menggulung blind". Motorized tanpa rantai.
+- **Bug lama yang ikut diperbaiki:**
+  - Script 3D halaman produk tidak pernah dimuat (cek template `template-product.html`
+    vs slug `template-product`).
+  - `assets/js/dist/` di-gitignore dan tidak di-build di server → motion/3D tidak pernah
+    aktif di production. Sekarang hasil build di-commit.
+  - Lottie (49 KB gzip) dimuat di setiap halaman padahal tidak dipakai → kini lazy.
+  - Cache pattern WordPress: versi tema dinaikkan ke 0.2.0 supaya pattern baru terbaca.
 
 ## Fase 1: Visual premium
 
