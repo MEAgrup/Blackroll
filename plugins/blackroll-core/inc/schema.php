@@ -61,7 +61,7 @@ add_action(
 			),
 			'sameAs'   => array(
 				'https://instagram.com/blackroll.official',
-				'https://www.tiktok.com/@blackroll.official',
+				'https://www.tiktok.com/@blackroll.blinds',
 			),
 		);
 		echo "\n<script type=\"application/ld+json\">" . wp_json_encode( $data ) . "</script>\n";
